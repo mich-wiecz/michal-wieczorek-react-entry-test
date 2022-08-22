@@ -1,6 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  ApolloConsumer,
+} from '@apollo/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals'
 import { store } from './app/store'
@@ -11,23 +16,29 @@ import './index.scss'
 
 const apolloClient = new ApolloClient({
   uri: 'http://localhost:4000/',
-  cache: InMemoryCache(),
+  cache: new InMemoryCache(),
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <ApolloProvider client={apolloClient}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<App />}>
-              <Route path=':category' element={<ProductsList />} />
-              <Route path='cart' element={<div />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
+      <ApolloConsumer>
+        {(client) => {
+          return (
+            <Provider store={store}>
+              <BrowserRouter>
+                <Routes>
+                  <Route path='/' element={<App apolloClient={client} />}>
+                    <Route path=':category' element={<ProductsList />} />
+                    <Route path='cart' element={<div />} />
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </Provider>
+          )
+        }}
+      </ApolloConsumer>
     </ApolloProvider>
   </React.StrictMode>
 )
