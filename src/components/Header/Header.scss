@@ -1,0 +1,32 @@
+@use '@Styles/colors' as *;
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $background;
+
+    &__content {
+        width: 100%;
+        max-width: 1440px;
+        height: 100%;
+        padding: 0 101px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__nav {
+        height: 56px;
+        align-self: flex-end;
+       
+    }
+
+    &__actions {
+        width: 204px;
+        margin-top: 23px;
+        align-self: flex-start;
+    }
+
+
+}

@@ -1,0 +1,48 @@
+@use '@Styles/colors' as *;
+
+.actions {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &__btn {
+        background-color: $background;
+        border: none;
+        cursor: pointer;
+    }
+
+    .currency-switch {
+        display: flex;
+        align-items: center;
+
+        &__currency {
+            display: block;
+            padding: 0 10px;
+            font-size: 18px;
+            line-height: 160%;
+        }
+
+        &__expander {
+            width: 6px;
+            height: 3px;
+            transform: translateY(1.5px);
+        }
+    }
+
+
+    .basket-toggler {
+        margin-left: 22px;
+        width: 20px;
+        height: 20px;
+
+        &__icon {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+   
+
+
+}
