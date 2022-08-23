@@ -1,0 +1,7 @@
+@use './colors.scss' as *;
+
+@mixin shadow {
+    box-shadow: 0 4px 35px $shadow;
+}
+
+

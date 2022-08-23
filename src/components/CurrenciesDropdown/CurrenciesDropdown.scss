@@ -1,0 +1,67 @@
+@use '@Styles/colors' as *;
+
+.currency-switch {
+    display: flex;
+    align-items: center;
+
+    &__currency {
+        display: block;
+        padding: 0 10px;
+        font-size: 18px;
+        line-height: 160%;
+    }
+
+    &__expander {
+        width: 6px;
+        height: 3px;
+        transform: translateY(1.5px);
+    }
+}
+
+.currencies {
+    
+    &__list {
+        width: 100%;
+        height: 100%;
+    }
+
+    .list {
+        margin-bottom: 8.5px;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+
+        &__item {
+            margin-top: 8.5px;
+            width: 114px;
+            height: 45px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            background-color: $background;
+            font-size: 18px;
+            line-height: 160%;
+            cursor: pointer;
+            transition: background-color, .3s ease-in-out;
+
+            &:hover, &--current {
+                background-color: $gray-light;
+            }
+
+            &__content {
+                margin-left: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &__divider {
+                height: 100%;
+                width: .5rem;
+            }
+
+        }
+    }
+}

@@ -1,0 +1,64 @@
+@use "@Styles/colors" as *;
+
+.loader {
+    position: relative;
+  display: inline-block;
+
+    .dot {
+        position: absolute;
+        top: 41%;
+        width: 16%;
+        height: 16%;
+        border-radius: 50%;
+        background-color: $primary;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+
+        &:nth-child(1) {
+            left: 10%;
+            animation: first .6s infinite;
+        }
+
+        &:nth-child(2) {
+            left: 10%;
+            animation: second .6s infinite;
+        }
+
+        &:nth-child(3) {
+            left: 40%;
+            animation: second .6s infinite;
+        }
+
+        &:nth-child(4) {
+            left: 70%;
+            animation: third .6s infinite;
+        }
+    }
+}
+
+
+@keyframes first {
+    0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+}
+
+@keyframes second {
+    0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(200%, 0);
+      }
+}
+
+@keyframes third {
+    0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0);
+      }
+}

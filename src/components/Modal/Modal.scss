@@ -1,0 +1,43 @@
+@use "@Styles/colors" as *;
+@use "@Styles/mixins";
+
+.modal__background {
+    position: absolute;
+    inset: 0;
+    background-color: $backdrop;
+    z-index: 10;
+
+    &--disabled {
+        z-index: -10;
+    }
+
+    &.transition {
+        background-color: $background;
+        transition: .3s ease-in-out;
+
+        .modal {
+            transform: translateY(-300px);
+            transition: .3s ease-in-out;
+        }
+
+        &.active {
+            background-color: $backdrop;
+        }
+
+    }
+}
+
+.modal {
+    position: absolute;
+    z-index: 30;
+    @include mixins.shadow;
+
+    &.transition {
+        transform: translateY(-500px);
+        transition: transform .4s ease-in-out;
+    }
+
+    &.active {
+        transform: translateY(0);
+    }
+}

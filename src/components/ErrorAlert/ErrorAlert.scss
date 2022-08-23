@@ -1,0 +1,10 @@
+@use "@Styles/colors" as *;
+
+.error-alert {
+    padding: 4px 16px;
+    background-color: $error;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
