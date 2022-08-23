@@ -99,4 +99,8 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = { changeCurrency, showModal, hideModal }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrenciesDropdown)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  null
+)(CurrenciesDropdown)

@@ -9,8 +9,9 @@ import './Nav.scss'
 
 class Nav extends React.Component {
   render() {
+    const { apolloClient, category } = this.props
     return (
-      <Query apolloClient={this.props.apolloClient} query={getCategoriesQuery}>
+      <Query apolloClient={apolloClient} query={getCategoriesQuery}>
         {({ loading, errors, data }) => (
           <nav className={`${this.props.className} nav`}>
             {loading && <Loader />}
@@ -19,18 +20,22 @@ class Nav extends React.Component {
             )}
             {data && (
               <ul className='nav__links links'>
-                {data.categories.map(({ name }) => (
-                  <li key={name}>
-                    <NavLink
-                      to={name === 'all' ? '/' : `/${name}`}
-                      className={({ isActive }) =>
-                        `links__item ${isActive ? 'links__item--active' : ''}`
-                      }
-                    >
-                      {capitalize(name)}
-                    </NavLink>
-                  </li>
-                ))}
+                {data.categories.map(({ name }) => {
+                  const path = name === 'all' ? '/' : `/${name}`
+                  const isCurrent = category === name
+                  return (
+                    <li key={name}>
+                      <NavLink
+                        to={path}
+                        className={`links__item ${
+                          isCurrent ? 'links__item--active' : ''
+                        }`}
+                      >
+                        {capitalize(name)}
+                      </NavLink>
+                    </li>
+                  )
+                })}
               </ul>
             )}
           </nav>

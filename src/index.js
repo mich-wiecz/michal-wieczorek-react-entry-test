@@ -1,17 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  ApolloConsumer,
-} from '@apollo/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { BrowserRouter } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals'
 import { store } from './app/store'
 import { Provider } from 'react-redux'
 import App from '@Components/App'
-import ProductsList from '@Components/ProductsList'
 import './index.scss'
 
 const apolloClient = new ApolloClient({
@@ -23,22 +17,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <ApolloProvider client={apolloClient}>
-      <ApolloConsumer>
-        {(client) => {
-          return (
-            <Provider store={store}>
-              <BrowserRouter>
-                <Routes>
-                  <Route path='/' element={<App apolloClient={client} />}>
-                    <Route path=':category' element={<ProductsList />} />
-                    <Route path='cart' element={<div />} />
-                  </Route>
-                </Routes>
-              </BrowserRouter>
-            </Provider>
-          )
-        }}
-      </ApolloConsumer>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App apolloClient={apolloClient} />
+        </BrowserRouter>
+      </Provider>
     </ApolloProvider>
   </React.StrictMode>
 )

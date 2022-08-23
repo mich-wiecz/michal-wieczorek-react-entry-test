@@ -1,6 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { showModal, hideModal } from '@/app/modalSlice'
 import Image from 'react-optimized-image'
 import BasketSvg from '@Images/basket.svg'
 import CurrenciesDropdown from '@Components/CurrenciesDropdown'
@@ -33,10 +31,4 @@ class HeaderActions extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  modal: state.modal.name,
-  currency: state.user.currency,
-})
-const mapDispatchToProps = { showModal, hideModal }
-
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderActions)
+export default HeaderActions

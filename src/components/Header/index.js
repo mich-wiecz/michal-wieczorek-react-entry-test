@@ -7,11 +7,15 @@ import './Header.scss'
 
 class Header extends React.Component {
   render() {
-    const { apolloClient } = this.props
+    const { apolloClient, category } = this.props
     return (
       <header className={`${this.props.className} header`}>
         <div className='header__content'>
-          <Nav className='header__nav' apolloClient={apolloClient} />
+          <Nav
+            className='header__nav'
+            apolloClient={apolloClient}
+            category={category}
+          />
           <Image src={LogoSvg} alt='Logo' className='header__logo' />
           <HeaderActions
             className='header__actions'
