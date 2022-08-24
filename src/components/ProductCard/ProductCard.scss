@@ -1,0 +1,107 @@
+@use "@Styles/colors" as *;
+@use "@Styles/mixins";
+
+.product {
+    position: relative;
+    max-width: 370px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    background-color: $background;
+    cursor: pointer;
+    transition: box-shadow .15s ease-in;
+
+    &:hover {
+        @include mixins.shadow;
+    }
+
+    &__image-container {
+        flex-grow: 1;
+      position: relative;
+      margin-bottom: 24px;
+      width: 100%;  
+    }
+
+    &__image {
+        width: 100%;
+    }
+
+    &__add-btn {
+        position: absolute;
+        top: 100%;
+        right: 4%;
+       transform: translateY(-50%) scale(0);
+       transition: transform .3s ease-in;
+    }
+
+    &:hover .product__add-btn {
+        transform: translateY(-50%) scale(1);
+    }
+
+    .add-btn {
+        width: 52px;
+        height: 52px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+        border: none;
+        background-color: $primary;
+        cursor: pointer;
+
+        &__icon {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    &__unavailable-info {
+        display: none;
+        position: absolute;
+        inset: 0;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        z-index: 1;
+        font-size: 24px;
+        line-height: 160%;
+    }
+
+    &__name, &__prize {
+        height: 29px;
+        display: inline-flex;
+        align-items: center;
+        font-size: 18px;
+        line-height: 160%;
+    }
+
+    &__name {
+        font-weight: 300;
+    }
+
+    &__prize {
+        font-weight: 500;
+    }
+
+    &__veil {
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background-color: $dark;
+        opacity: 20%;
+        cursor: not-allowed;
+    }
+
+    &--unavailable {
+        pointer-events: none;
+        opacity: 45%;
+    }
+
+    &--unavailable .product__unavailable-info {
+        display: flex;
+     }
+
+
+
+
+   }

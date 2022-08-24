@@ -4,16 +4,20 @@ import './Layout.scss'
 
 class Layout extends React.Component {
   render() {
-    const { category, apolloClient } = this.props
+    const { className = '', category, apolloClient } = this.props
 
     return (
       <div className='layout'>
-        <Header
-          apolloClient={apolloClient}
-          category={category}
-          className='layout__header'
-        />
-        <main className='layout__main'>{this.props.children}</main>
+        <div className='layout__content'>
+          <Header
+            apolloClient={apolloClient}
+            category={category}
+            className='layout__header'
+          />
+          <main className={`layout__main ${className}`}>
+            {this.props.children}
+          </main>
+        </div>
       </div>
     )
   }

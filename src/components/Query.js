@@ -1,4 +1,5 @@
 import React from 'react'
+import { areDeepEqual } from '@Utils'
 
 class Query extends React.Component {
   constructor(props) {
@@ -38,6 +39,24 @@ class Query extends React.Component {
 
   componentDidMount() {
     this.executeQuery()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      ![typeof prevProps.variables, typeof this.props.variables].includes(
+        'object'
+      )
+    ) {
+      return
+    }
+
+    const hasVariablesChanged = !areDeepEqual(
+      prevProps.variables,
+      this.props.variables
+    )
+    if (hasVariablesChanged) {
+      this.executeQuery()
+    }
   }
 
   render() {
