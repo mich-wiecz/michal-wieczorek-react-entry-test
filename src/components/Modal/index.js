@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { connect } from 'react-redux'
+import { hideModal } from '@/app/modalSlice'
 import './Modal.scss'
 
 class Modal extends React.Component {
@@ -8,18 +10,14 @@ class Modal extends React.Component {
     this.state = {
       mounted: false,
       active: false,
-      windowWidth: 0,
-      windowHeight: 0,
     }
-
-    this.modal = React.createRef()
   }
 
   handleClickOutside() {
-    const { onClose, transition = false } = this.props
+    const { hideModal, transition = false } = this.props
 
     if (!transition) {
-      return onClose()
+      return hideModal()
     }
 
     this.setState(
@@ -28,63 +26,26 @@ class Modal extends React.Component {
       }),
       () => {
         setTimeout(() => {
-          onClose()
+          hideModal()
         }, 400)
       }
     )
   }
 
-  handleWindowResize() {
-    this.setState(() => ({
-      windowHeight: window.innerHeight,
-      windowWidth: window.innerWidth,
-    }))
-  }
+  getPosition() {
+    const { relativePosition, position } = this.props
 
-  getPositions() {
-    const {
-      relativePositions = null,
-      element,
-      minWidth,
-      minHeight,
-    } = this.props
-
-    const positions = {
-      top: 'auto',
-      bottom: 'auto',
-      left: 'auto',
-      right: 'auto',
+    if (position) {
+      return position
     }
 
-    if (!element || !element.current || !relativePositions) {
+    if (!relativePosition) {
       return {
-        ...positions,
-        top: '80px',
-        left: `calc(50% - ${minWidth / 2}px)`,
+        top: 0,
+        left: '50%',
       }
     }
-
-    const { top, bottom, left, right } = element.current.getBoundingClientRect()
-
-    const { horizontal, vertical } = relativePositions
-
-    if (horizontal === 'left') {
-      positions.left = `${left - minWidth}px`
-    } else if (horizontal === 'right') {
-      positions.left = `${right - minWidth}px`
-    } else {
-      positions.left = `calc(50% - ${minWidth / 2}px)`
-    }
-
-    if (vertical === 'top') {
-      positions.top = `${top - minHeight}px`
-    } else if (vertical === 'bottom') {
-      positions.top = `${bottom}px`
-    } else {
-      positions.top = '80px'
-    }
-
-    return positions
+    return relativePosition
   }
 
   componentDidMount() {
@@ -94,29 +55,34 @@ class Modal extends React.Component {
     })
 
     window.addEventListener('click', this.handleClickOutside.bind(this))
+  }
 
-    window.addEventListener('resize', this.handleWindowResize.bind(this))
+  componentDidUpdate(prev) {
+    const wasOn = prev.currModal === prev.name
+    const isOn = this.props.currModal === this.props.name
 
-    setTimeout(() => {
-      this.setState(() => ({ active: true }))
-    }, 1)
+    if (!wasOn && isOn) {
+      setTimeout(() => {
+        this.setState(() => ({ active: true }))
+      }, 1)
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClickOutside.bind(this))
-
-    window.removeEventListener('resize', this.handleWindowResize.bind(this))
   }
 
   render() {
     const {
-      className,
+      className = '',
+      name,
+      currModal,
       children,
       backdrop = true,
       transition = false,
     } = this.props
 
-    if (!this.state.mounted) {
+    if (!this.state.mounted || name !== currModal) {
       return null
     }
 
@@ -130,19 +96,23 @@ class Modal extends React.Component {
           }`}
         />
         <div
-          ref={this.modal}
           className={`${className} modal ${transition ? 'transition' : ''} ${
             this.state.active ? 'active' : ''
           }`}
-          style={{ ...this.getPositions() }}
+          style={this.getPosition()}
           onClick={(e) => e.stopPropagation()}
         >
           {children}
         </div>
       </>,
-      document.getElementById('root')
+      document.getElementById('layout')
     )
   }
 }
 
-export default Modal
+const mapStateToProps = (state) => ({
+  currModal: state.modal.name,
+  relativePosition: state.modal.position,
+})
+const mapDispatchToProps = { hideModal }
+export default connect(mapStateToProps, mapDispatchToProps, null)(Modal)

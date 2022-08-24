@@ -3,11 +3,15 @@
 
 .modal__background {
     position: absolute;
-    inset: 0;
+    left: -101px;
+    width: 100vw;
+    top: 80px;
+    bottom: 0;
     background-color: $backdrop;
     z-index: 10;
 
     &--disabled {
+        background-color: transparent !important;
         z-index: -10;
     }
 
@@ -16,7 +20,7 @@
         transition: .3s ease-in-out;
 
         .modal {
-            transform: translateY(-300px);
+            transform: translateY(-100px);
             transition: .3s ease-in-out;
         }
 

@@ -8,7 +8,7 @@ class Layout extends React.Component {
 
     return (
       <div className='layout'>
-        <div className='layout__content'>
+        <div id='layout' className='layout__content'>
           <Header
             apolloClient={apolloClient}
             category={category}
@@ -22,4 +22,5 @@ class Layout extends React.Component {
     )
   }
 }
+
 export default Layout

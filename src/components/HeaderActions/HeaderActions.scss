@@ -12,6 +12,24 @@
         cursor: pointer;
     }
 
+    .currency-switch {
+        display: flex;
+        align-items: center;
+    
+        &__currency {
+            display: block;
+            padding: 0 10px;
+            font-size: 18px;
+            line-height: 160%;
+        }
+    
+        &__expander {
+            width: 6px;
+            height: 3px;
+            transform: translateY(1.5px);
+        }
+    }
+
 
 
 

@@ -1,31 +1,27 @@
 @use "@Styles/colors" as *;
 
 .layout {
-  width: 100vw;
   min-height: 100vh;
+  margin: 0 101px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: $background;
+
+  @media (max-width: 900px) {
+    margin: 0 50px;
+  }
+
+  @media (max-width: 720px) {
+    margin: 0 20px;
+  }
  
 
   &__content {
-    margin: 0 auto;
-    padding: 0 101px;
+    position: relative;
+    flex-grow: 1;
     min-height: 100vh;
-    width: 100%;
     max-width: 1440px;
     display: flex;
     flex-direction: column;
-
-      @media (max-width: 900px) {
-        padding: 0 50px;
-      }
-    
-      @media (max-width: 720px) {
-        padding: 0 20px;
-      }
-    
     
   }
 
@@ -38,6 +34,7 @@
   &__main {
     flex-grow: 1;
   }
+
 
   
 }
