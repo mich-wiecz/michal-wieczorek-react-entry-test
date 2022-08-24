@@ -4,4 +4,12 @@
     box-shadow: 0 4px 35px $shadow;
 }
 
+@mixin subheading {
+    margin-bottom: 8px;
+    font-family: "Roboto Condensed";
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: bold;
+}
+
 

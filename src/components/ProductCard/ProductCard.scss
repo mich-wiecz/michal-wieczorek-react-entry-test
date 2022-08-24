@@ -1,7 +1,7 @@
 @use "@Styles/colors" as *;
 @use "@Styles/mixins";
 
-.product {
+.product-card {
     position: relative;
     max-width: 370px;
     padding: 16px;
@@ -34,7 +34,7 @@
        transition: transform .3s ease-in;
     }
 
-    &:hover .product__add-btn {
+    &:hover .product-card__add-btn {
         transform: translateY(-50%) scale(1);
     }
 
@@ -97,7 +97,7 @@
         opacity: 45%;
     }
 
-    &--unavailable .product__unavailable-info {
+    &--unavailable .product-card__unavailable-info {
         display: flex;
      }
 

@@ -1,4 +1,6 @@
 import React from 'react'
+import Loader from '@Components/Loader'
+import ErrorAlert from '@Components/ErrorAlert'
 import { areDeepEqual } from '@Utils'
 
 class Query extends React.Component {
@@ -19,14 +21,21 @@ class Query extends React.Component {
         variables: this.props.variables,
       })
       .then((result) => {
-        this.setState({
-          ...this.state,
-          loading: false,
-          data:
-            'transformer' in this.props
-              ? this.props.transformer(result.data)
-              : result.data,
-        })
+        this.setState(
+          {
+            ...this.state,
+            loading: false,
+            data:
+              'transformer' in this.props
+                ? this.props.transformer(result.data)
+                : result.data,
+          },
+          () => {
+            if (this.props.onLoaded) {
+              this.props.onLoaded(this.state.data)
+            }
+          }
+        )
       })
       .catch((error) => {
         this.setState({
@@ -60,7 +69,23 @@ class Query extends React.Component {
   }
 
   render() {
-    return this.props.children(this.state)
+    const { loading, errors, data } = this.state
+    const {
+      loaderSize = 80,
+      loaderClassName = '',
+      errorClassName = '',
+      errorMessage = 'Error!',
+    } = this.props
+
+    return (
+      <>
+        {loading && <Loader size={loaderSize} className={loaderClassName} />}
+        {errors.length > 0 && (
+          <ErrorAlert className={errorClassName}>{errorMessage}</ErrorAlert>
+        )}
+        {data && this.props.children(data)}
+      </>
+    )
   }
 }
 

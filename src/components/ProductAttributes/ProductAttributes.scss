@@ -1,0 +1,66 @@
+@use "@Styles/colors" as *;
+@use "@Styles/mixins";
+
+.attrs {
+    
+
+    &__section {
+        margin-bottom: 24px;
+    }
+
+    .attrs-section {
+        margin: 50px 0;
+
+        &__name {
+            @include mixins.subheading;
+        }
+
+
+        .attrs-list {
+            list-style: none;
+            display: flex;
+
+            .attribute {
+                transition: .3s ease-in-out;
+                cursor: pointer;
+
+                &--text {
+                    margin-right: 12px;
+                    padding: 8px;
+                    min-width: 63px;
+                    min-height: 45px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: "Source Sans Pro";
+                    font-size: 16px;
+                    line-height: 18px;
+                    letter-spacing: 5%;
+                    border: 1px solid $dark;
+                    background-color: $background;
+
+                    &.selected {
+                        background-color: $dark; 
+                        color: $background;
+                     }
+                }
+
+                &--swatch {
+                    margin-right: 8px;
+                    width: 36px;
+                    height: 36px;
+                    border: 2px solid $background;
+
+                    &.selected {
+                        box-shadow: 0 0 0 1px $primary;
+                    }
+                }
+            }
+
+       
+
+        }
+
+     
+    }
+}

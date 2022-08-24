@@ -9,35 +9,40 @@ class ProductCard extends React.Component {
     const {
       className = '',
       currency,
-      id,
       name,
       inStock,
       gallery,
       prices,
+      onClick,
     } = this.props
     const { symbol, amount } = getPrice(prices, currency)
 
     return (
       <div
         role='button'
-        className={`${className} product ${
-          !inStock ? 'product--unavailable' : ''
+        className={`${className} product-card ${
+          !inStock ? 'product-card--unavailable' : ''
         }`}
+        onClick={onClick}
       >
-        <div className='product__image-container'>
-          <img src={gallery[0]} alt='product' className='product__image' />
-          <button type='button' className='product__add-btn add-btn'>
+        <div className='product-card__image-container'>
+          <img
+            src={gallery[0]}
+            alt='product-card'
+            className='product-card__image'
+          />
+          <button type='button' className='product-card__add-btn add-btn'>
             <BasketSvg className='add-btn__icon' />
           </button>
-          <div className='product__unavailable-info'>Out of stock</div>
+          <div className='product-card__unavailable-info'>Out of stock</div>
         </div>
 
-        <h4 className='product__name'>{name}</h4>
-        <span className='product__prize'>
+        <h4 className='product-card__name'>{name}</h4>
+        <span className='product-card__prize'>
           {symbol}
           {amount}
         </span>
-        <div className='product__veil' />
+        <div className='product-card__veil' />
       </div>
     )
   }

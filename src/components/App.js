@@ -1,29 +1,36 @@
 import React from 'react'
 import { Switch, Route, withRouter } from 'react-router-dom'
-import ProductListing from '@Components/ProductListing'
+import CategoryPage from '@Components/CategoryPage'
+import ProductPage from '@Components/ProductPage'
 
 class App extends React.Component {
-  getCategory(location) {
-    const category = location.pathname.replace('/', '')
-    if (category === '') {
-      return 'all'
+  getParams(location) {
+    const [, category, productId] = location.pathname.split('/')
+    return {
+      category: category === '' ? 'all' : category,
+      productId,
     }
-    return category
   }
 
   render() {
-    const { apolloClient } = this.props
+    const { apolloClient, location, history } = this.props
+    const { category, productId } = this.getParams(location)
     return (
       <Switch>
-        <Route
-          path='/'
-          render={({ location }) => (
-            <ProductListing
-              apolloClient={apolloClient}
-              category={this.getCategory(location)}
-            />
-          )}
-        />
+        <Route path='/:category/:productId'>
+          <ProductPage
+            apolloClient={apolloClient}
+            category={category}
+            productId={productId}
+          />
+        </Route>
+        <Route path='/'>
+          <CategoryPage
+            apolloClient={apolloClient}
+            category={category}
+            history={history}
+          />
+        </Route>
       </Switch>
     )
   }

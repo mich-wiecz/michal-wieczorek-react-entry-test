@@ -14,6 +14,7 @@ export const getCategoryProductsQuery = gql`
       products {
         id
         name
+        category
         inStock
         prices {
           currency {
@@ -42,6 +43,7 @@ export const getProductQuery = gql`
     product(id: $id) {
       name
       brand
+      inStock
       description
       prices {
         currency {
