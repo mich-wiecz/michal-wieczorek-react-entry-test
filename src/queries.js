@@ -14,6 +14,7 @@ export const getCategoryProductsQuery = gql`
       products {
         id
         name
+        brand
         category
         inStock
         prices {

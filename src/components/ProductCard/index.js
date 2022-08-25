@@ -12,6 +12,7 @@ class ProductCard extends React.Component {
       className = '',
       id,
       name,
+      brand,
       inStock,
       gallery,
       prices,
@@ -21,7 +22,6 @@ class ProductCard extends React.Component {
       addItemToCart,
     } = this.props
     const { symbol, amount } = getPrice(prices, currency)
-
     return (
       <div
         role='button'
@@ -54,7 +54,9 @@ class ProductCard extends React.Component {
           <div className='product-card__unavailable-info'>Out of stock</div>
         </div>
 
-        <h4 className='product-card__name'>{name}</h4>
+        <h4 className='product-card__name'>
+          {brand} {name}
+        </h4>
         <span className='product-card__prize'>
           {symbol}
           {amount}
