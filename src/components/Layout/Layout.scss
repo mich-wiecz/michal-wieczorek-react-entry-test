@@ -8,6 +8,10 @@
   justify-content: center;
   background-color: $background;
 
+  @media (max-width: 1200px) {
+    padding: 0 70px;
+  }
+
   @media (max-width: 900px) {
     padding: 0 50px;
   }

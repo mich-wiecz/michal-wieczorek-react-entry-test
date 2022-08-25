@@ -4,10 +4,11 @@
 .minicart {
     position: fixed;
     padding: 32px 16px;
-    width: 336px;
+    width: 339px;
     max-height: 80vh;
     overflow-x: hidden;
     overflow-y: auto;
+    @include mixins.customScrollbar($track-color: $dark);
     background-color: $background;
 
     &__header {
