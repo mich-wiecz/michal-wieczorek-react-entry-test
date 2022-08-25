@@ -33,3 +33,26 @@ export function getPrice(prices, current) {
     symbol: current,
   }
 }
+
+export function getDefaultAttributes(attributes) {
+  if (!attributes) return
+  return attributes.reduce((result, { id, items }) => {
+    return {
+      ...result,
+      [id]: items[0].id,
+    }
+  }, {})
+}
+
+function pricesToObject(prices) {
+  return prices.reduce((result, { currency, amount }) => {
+    return {
+      ...result,
+      [currency.symbol]: amount,
+    }
+  }, {})
+}
+
+export function arePricesArraysEqual(p1, p2) {
+  return areDeepEqual(pricesToObject(p1), pricesToObject(p2))
+}

@@ -2,7 +2,6 @@
 @use "@Styles/mixins";
 
 .attrs {
-    
 
     &__section {
         margin-bottom: 24px;
@@ -35,7 +34,7 @@
                     font-family: "Source Sans Pro";
                     font-size: 16px;
                     line-height: 18px;
-                    letter-spacing: 5%;
+                    letter-spacing: 5px;
                     border: 1px solid $dark;
                     background-color: $background;
 
@@ -63,4 +62,59 @@
 
      
     }
+
+
+    &--mini &__section {
+        margin-bottom: 8px;
+    }
+
+    &--mini div:nth-last-of-type(1).attrs-section {
+        margin: 0;
+    }
+
+    &--mini .attrs-section {
+        margin: 0 0 8px 0;
+
+        &__name {
+            margin-bottom: 0;
+            font-family: 'Raleway';
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 16px;
+        }
+
+        .attrs-list {
+            flex-wrap: wrap;
+            .attribute {
+                margin-top: 8px;
+                &--text {
+                    margin-right: 8px;
+                    padding: 6px;
+                    min-width: 24px;
+                    min-height: auto;
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 14px;
+                    line-height: 22.4px;
+                    letter-spacing: 0;
+                    border: 1px solid $dark;
+                }
+    
+                &--swatch {
+                    margin-right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    border: 3px solid $background;
+                }
+    
+            }
+
+         }
+
+      
+    }
+
+
 }

@@ -1,8 +1,10 @@
 @use '@Styles/colors' as *;
-
+@use '@Styles/mixins';
 
 
 .currencies {
+    background-color: $background;
+    @include mixins.shadow;
     
     &__list {
         width: 100%;

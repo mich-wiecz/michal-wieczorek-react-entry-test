@@ -18,7 +18,7 @@ class HeaderActions extends React.Component {
             events={['click']}
             modalPosition={{
               top: '63px',
-              right: '-20px',
+              right: 0,
             }}
           >
             <button type='button' className={`actions__btn currency-switch`}>

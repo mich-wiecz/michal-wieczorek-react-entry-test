@@ -1,19 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPrice } from '@Utils'
+import { addItemToCart } from '@/app/userSlice'
+import { getPrice, getDefaultAttributes } from '@Utils'
 import { ReactComponent as BasketSvg } from '@Images/basket-white.svg'
+import ModalTrigger from '@Components/Modal/ModalTrigger'
 import './ProductCard.scss'
 
 class ProductCard extends React.Component {
   render() {
     const {
       className = '',
-      currency,
+      id,
       name,
       inStock,
       gallery,
       prices,
+      attributes,
       onClick,
+      currency,
+      addItemToCart,
     } = this.props
     const { symbol, amount } = getPrice(prices, currency)
 
@@ -31,9 +36,21 @@ class ProductCard extends React.Component {
             alt='product-card'
             className='product-card__image'
           />
-          <button type='button' className='product-card__add-btn add-btn'>
-            <BasketSvg className='add-btn__icon' />
-          </button>
+          <ModalTrigger name='minicart' events={['click']}>
+            <button
+              type='button'
+              className='product-card__add-btn add-btn'
+              onClick={() =>
+                addItemToCart({
+                  id,
+                  prices,
+                  attributes: getDefaultAttributes(attributes) || {},
+                })
+              }
+            >
+              <BasketSvg className='add-btn__icon' />
+            </button>
+          </ModalTrigger>
           <div className='product-card__unavailable-info'>Out of stock</div>
         </div>
 
@@ -52,4 +69,4 @@ const mapStateToProps = (state) => ({
   currency: state.user.currency,
 })
 
-export default connect(mapStateToProps)(ProductCard)
+export default connect(mapStateToProps, { addItemToCart })(ProductCard)

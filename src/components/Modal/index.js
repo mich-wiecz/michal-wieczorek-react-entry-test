@@ -91,7 +91,7 @@ class Modal extends React.Component {
         <div
           className={`modal__background ${
             !backdrop ? 'modal__background--disabled' : ''
-          } ${className} ${transition ? 'transition' : ''} ${
+          } ${transition ? 'transition' : ''} ${
             this.state.active ? 'active' : ''
           }`}
         />

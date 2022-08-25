@@ -5,14 +5,24 @@ import './ProductPrice.scss'
 
 class ProductPrice extends React.Component {
   render() {
-    const { className = '', prices, currency, ...props } = this.props
-
-    const { amount, symbol } = getPrice(prices, currency)
+    const {
+      className = '',
+      price,
+      prices,
+      version,
+      currency,
+      ...props
+    } = this.props
+    const amount =
+      typeof price === 'number' ? price : getPrice(prices, currency).amount
 
     return (
-      <div className={`product-price ${className}`} {...props}>
-        <span className='product-price__symbol'>{symbol}</span>
-        <span className='product-price__amount'>{amount}</span>
+      <div
+        className={`product-price product-price--${version} ${className}`}
+        {...props}
+      >
+        <span>{currency}</span>
+        <span>{amount}</span>
       </div>
     )
   }

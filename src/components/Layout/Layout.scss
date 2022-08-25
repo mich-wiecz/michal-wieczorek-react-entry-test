@@ -2,22 +2,24 @@
 
 .layout {
   min-height: 100vh;
-  margin: 0 101px;
+  width: 100vw;
+  padding: 0 101px;
   display: flex;
+  justify-content: center;
   background-color: $background;
 
   @media (max-width: 900px) {
-    margin: 0 50px;
+    padding: 0 50px;
   }
 
   @media (max-width: 720px) {
-    margin: 0 20px;
+    padding: 0 20px;
   }
  
 
   &__content {
-    position: relative;
     flex-grow: 1;
+    position: relative;
     min-height: 100vh;
     max-width: 1440px;
     display: flex;

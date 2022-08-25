@@ -1,0 +1,68 @@
+@use "@Styles/colors" as *;
+
+.minicart {
+    padding: 32px 16px;
+    width: 336px;
+    max-height: 80vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: $background;
+
+    &__header {
+        margin-bottom: 32px;
+        font-size: 16px;
+        line-height: 160%;
+    }
+
+    &__title {
+       display: inline;
+        font-weight: 700;
+    }
+
+    &__total-amount {
+        font-weight: 500;
+    }
+
+
+    &__products {
+        margin-bottom: 32px;
+    }
+
+    &__total {
+        margin-bottom: 32px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__total-label {
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 18px;
+    }
+
+    &__total-price {
+        width: auto;
+        margin-right: 4px;
+        font-size: 16px;
+        line-height: 160%;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__btn {
+        font-size: 14px !important;
+        &--light {
+            margin-right: 10px;
+            background-color: $background !important;
+            color: $dark !important;
+            border: 1px solid $dark !important;
+        }
+    }
+}

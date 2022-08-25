@@ -1,0 +1,33 @@
+.cart-item {
+    width: 100%;
+    display: flex;
+    &__details {
+        width: 155px;
+        min-width: 155px;
+    }
+
+    &__header:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    &__header, &__price {
+        margin-bottom: 8px;
+    }
+
+    &__amount {
+        margin: 0 4px;
+    }
+
+
+    &__img-container {
+        margin-left: 4px;
+        flex-grow: 1;
+    }
+
+    &__img {
+        width: 100%;
+    }
+
+
+}

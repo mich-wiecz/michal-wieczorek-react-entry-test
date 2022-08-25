@@ -23,6 +23,7 @@ const localStorageMiddleware = ({ getState }) => {
 const rehydrateStore = () => {
   const userState = localStorage.getItem('userState')
   if (!userState) return
+
   return {
     user: JSON.parse(userState),
   }

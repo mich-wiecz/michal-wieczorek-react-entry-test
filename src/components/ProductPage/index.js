@@ -1,11 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { addItemToCart } from '@/app/userSlice'
+import { getDefaultAttributes } from '@Utils'
 import Layout from '@Components/Layout'
 import Query from '@Components/Query'
 import ProductHeader from '@Components/ProductHeader'
 import ProductAttributes from '@Components/ProductAttributes'
 import ProductPrice from '@Components/ProductPrice'
 import ActionButton from '@Components/ActionButton'
+import ModalTrigger from '@Components/Modal/ModalTrigger'
 import { getProductQuery } from '@Queries'
 import './ProductPage.scss'
 
@@ -21,21 +24,12 @@ class ProductPage extends React.Component {
 
   initializeAttributesState(data) {
     const { attributes } = data.product
-    if (!attributes) {
-      return
-    }
-    const initialAttributesSelection = attributes.reduce(
-      (result, { id, items }) => {
-        return {
-          ...result,
-          [id]: items[0].id,
-        }
-      },
-      {}
-    )
+
+    const defaultAttrs = getDefaultAttributes(attributes)
+    if (!defaultAttrs) return
 
     this.setState(() => ({
-      attributesSelection: initialAttributesSelection,
+      attributesSelection: defaultAttrs,
     }))
   }
 
@@ -55,7 +49,7 @@ class ProductPage extends React.Component {
   }
 
   render() {
-    const { category, apolloClient, productId } = this.props
+    const { category, apolloClient, productId, addItemToCart } = this.props
 
     return (
       <Layout apolloClient={apolloClient} category={category}>
@@ -121,9 +115,20 @@ class ProductPage extends React.Component {
                       <h5 className='price__heading'>Price:</h5>
                       <ProductPrice className='price__value' prices={prices} />
                     </div>
-                    <ActionButton className='details__action-btn'>
-                      Add to cart
-                    </ActionButton>
+                    <ModalTrigger name='minicart' events={['click']}>
+                      <ActionButton
+                        className='details__action-btn'
+                        onClick={() =>
+                          addItemToCart({
+                            id: productId,
+                            attributes: this.state.attributesSelection,
+                            prices,
+                          })
+                        }
+                      >
+                        Add to cart
+                      </ActionButton>
+                    </ModalTrigger>
                     <p
                       className='details__description'
                       dangerouslySetInnerHTML={{
@@ -145,4 +150,4 @@ const mapStateToProps = (state) => ({
   currency: state.user.currency,
 })
 
-export default connect(mapStateToProps)(ProductPage)
+export default connect(mapStateToProps, { addItemToCart })(ProductPage)

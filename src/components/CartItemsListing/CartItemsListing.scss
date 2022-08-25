@@ -1,0 +1,16 @@
+.cart-listing {
+    list-style: none;
+
+    &__item {
+        width: 100%;
+        
+    }
+
+    .cart-listing__item {
+        margin-bottom: 40px;
+    }
+
+   li:nth-last-of-type(1) &__item {
+        margin-bottom: 0;
+    }
+}

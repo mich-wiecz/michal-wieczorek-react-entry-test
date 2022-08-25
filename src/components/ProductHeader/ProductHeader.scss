@@ -1,7 +1,6 @@
 
 
 .product-header {
-
     &__brand, &__name {
         display: block;
         font-size: 30px;
@@ -16,5 +15,16 @@
     &__name {
         font-weight: 400;
     }
+
+    &--mini * {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 160%;
+    }
+
+    &--mini &__brand {
+        margin-bottom: 0;
+    }
+
 
 }
