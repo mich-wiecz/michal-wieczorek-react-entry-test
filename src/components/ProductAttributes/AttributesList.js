@@ -1,25 +1,40 @@
 import React from 'react'
+import { areSizesEqual } from '@Utils'
 import './ProductAttributes.scss'
 
 class AttributesList extends React.Component {
   render() {
-    const { className = '', type, items, selected, onSelected } = this.props
+    const {
+      className = '',
+      name,
+      type,
+      items,
+      selected,
+      onSelected,
+    } = this.props
 
     return (
       <ul className={`${className} attrs-list`}>
-        {items.map(({ id, value, displayValue }) => (
-          <li title={displayValue} key={id}>
-            <button
-              className={`attribute attribute--${type} ${
-                selected === id ? 'selected' : ''
-              }`}
-              style={type === 'swatch' ? { backgroundColor: value } : {}}
-              onClick={() => onSelected(id)}
-            >
-              {type === 'text' ? value : ''}
-            </button>
-          </li>
-        ))}
+        {items.map(({ id, value, displayValue }) => {
+          const isSelected =
+            name === 'Size'
+              ? areSizesEqual(selected, value)
+              : selected === value
+
+          return (
+            <li title={displayValue} key={id}>
+              <button
+                className={`attribute attribute--${type} ${
+                  isSelected ? 'selected' : ''
+                }`}
+                style={type === 'swatch' ? { backgroundColor: value } : {}}
+                onClick={() => onSelected(value)}
+              >
+                {type === 'text' ? value : ''}
+              </button>
+            </li>
+          )
+        })}
       </ul>
     )
   }

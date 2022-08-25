@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import CategoryPage from '@Components/CategoryPage'
 import ProductPage from '@Components/ProductPage'
+import CartPage from '@Components/CartPage'
 
 class App extends React.Component {
   getParams(location) {
@@ -17,6 +18,9 @@ class App extends React.Component {
     const { category, productId } = this.getParams(location)
     return (
       <Switch>
+        <Route path='/cart'>
+          <CartPage apolloClient={apolloClient} />
+        </Route>
         <Route path='/:category/:productId'>
           <ProductPage
             apolloClient={apolloClient}

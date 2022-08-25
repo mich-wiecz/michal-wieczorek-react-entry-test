@@ -1,0 +1,29 @@
+.table {
+    display: flex;
+
+    &__titles, &__values {
+        list-style: none;
+    } 
+
+    &__titles {
+        margin-right: 6px;
+    }
+
+    &__title, &__value {
+        margin-bottom: 8px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        line-height: 28px;
+    }
+
+    &__title--highlighted {
+        font-weight: 500;
+    }
+
+    &__value {
+        font-weight: 700;
+    }
+
+}

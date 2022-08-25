@@ -9,7 +9,7 @@ class ProductPrice extends React.Component {
       className = '',
       price,
       prices,
-      version,
+      variant,
       currency,
       ...props
     } = this.props
@@ -18,7 +18,7 @@ class ProductPrice extends React.Component {
 
     return (
       <div
-        className={`product-price product-price--${version} ${className}`}
+        className={`product-price product-price--${variant} ${className}`}
         {...props}
       >
         <span>{currency}</span>

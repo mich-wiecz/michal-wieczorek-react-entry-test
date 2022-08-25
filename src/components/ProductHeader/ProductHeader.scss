@@ -1,6 +1,7 @@
 
 
 .product-header {
+    display: inline-block;
     &__brand, &__name {
         display: block;
         font-size: 30px;

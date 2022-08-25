@@ -9,22 +9,23 @@ class ProductAttributes extends React.Component {
       attributes,
       selection,
       onSelected,
-      version,
+      variant,
     } = this.props
     if (attributes.length === 0) {
       return null
     }
     return (
-      <div className={`${className} attrs attrs--${version}`}>
+      <div className={`${className} attrs attrs--${variant}`}>
         {attributes.map(({ id, type, name, items }) => (
           <div key={id} className='attrs__section attrs-section'>
             <h5 className='attrs-section__name'>{name}:</h5>
             <AttributesList
-              version={version}
+              variant={variant}
+              name={name}
               type={type}
               items={items}
               selected={selection[id]}
-              onSelected={(itemId) => onSelected(id, itemId)}
+              onSelected={(value) => onSelected(id, value)}
             />
           </div>
         ))}

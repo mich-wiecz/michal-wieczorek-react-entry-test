@@ -21,6 +21,7 @@ class CurrenciesDropdown extends React.Component {
       <Modal
         className={`currencies ${className}`}
         name='currencies'
+        position={{ top: '63px', right: 0 }}
         backdrop={false}
         transition={true}
       >

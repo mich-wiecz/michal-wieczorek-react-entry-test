@@ -1,15 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { selectItemsTotal, selectTotalPrice } from '@/app/userSlice.js'
+import { Link } from 'react-router-dom'
 import Modal from '@Components/Modal'
 import CartItemsListing from '@Components/CartItemsListing'
 import ProductPrice from '@Components/ProductPrice'
-import ActionButton from '@Components/ActionButton'
 import './Minicart.scss'
 
 class Minicart extends React.Component {
   render() {
-    const { apolloClient, totalAmount, totalPrice, currency } = this.props
+    const { apolloClient, container, totalAmount, totalPrice, currency } =
+      this.props
 
     return (
       <Modal
@@ -17,10 +18,11 @@ class Minicart extends React.Component {
         className='minicart'
         transition={true}
         backdrop={true}
-        position={{
+        element={container}
+        position={({ right }) => ({
           top: '80px',
-          right: 0,
-        }}
+          right: `calc(100vw - ${right + 16}px)`,
+        })}
       >
         <header className='minicart__header'>
           <h2 className='minicart__title'>My bag, </h2>
@@ -29,7 +31,7 @@ class Minicart extends React.Component {
         <CartItemsListing
           className='minicart__products'
           apolloClient={apolloClient}
-          version='mini'
+          variant='mini'
         />
         <div className='minicart__total'>
           <span className='minicart__total-label'>Total</span>
@@ -40,10 +42,10 @@ class Minicart extends React.Component {
           />
         </div>
         <div className='minicart__actions'>
-          <ActionButton className='minicart__btn minicart__btn--light'>
+          <Link to='/cart' className='minicart__btn minicart__btn--light'>
             View bag
-          </ActionButton>
-          <ActionButton className='minicart__btn'>Check out</ActionButton>
+          </Link>
+          <button className='minicart__btn'>Check out</button>
         </div>
       </Modal>
     )

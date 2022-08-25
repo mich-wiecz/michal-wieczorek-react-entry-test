@@ -1,6 +1,8 @@
 @use "@Styles/colors" as *;
+@use "@Styles/mixins";
 
 .minicart {
+    position: fixed;
     padding: 32px 16px;
     width: 336px;
     max-height: 80vh;
@@ -25,7 +27,7 @@
 
 
     &__products {
-        margin-bottom: 32px;
+        margin-bottom: 12px;
     }
 
     &__total {
@@ -57,7 +59,9 @@
     }
 
     &__btn {
+        @include mixins.actionButton;
         font-size: 14px !important;
+        text-decoration: none;
         &--light {
             margin-right: 10px;
             background-color: $background !important;

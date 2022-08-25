@@ -1,0 +1,22 @@
+.carousel {
+    position: relative;
+    overflow: hidden;
+
+    &__actions {
+        width: 56px;
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__btn {
+        width: 24px;
+        height: 24px;
+        background-color: rgba(0, 0, 0, 0.73);
+        cursor: pointer;
+    }
+
+}

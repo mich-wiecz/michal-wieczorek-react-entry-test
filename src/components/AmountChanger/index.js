@@ -8,13 +8,13 @@ class AmountChanger extends React.Component {
   render() {
     const {
       className = '',
-      version,
+      variant,
       amount,
       onIncrease,
       onDecrease,
     } = this.props
     return (
-      <div className={`amount-changer amount-changer--${version} ${className}`}>
+      <div className={`amount-changer amount-changer--${variant} ${className}`}>
         <Image
           role='button'
           src={PlusSvg}

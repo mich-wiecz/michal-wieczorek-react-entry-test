@@ -2,8 +2,7 @@
     width: 100%;
     display: flex;
     &__details {
-        width: 155px;
-        min-width: 155px;
+        flex-grow: 1;
     }
 
     &__header:hover {
@@ -16,18 +15,28 @@
     }
 
     &__amount {
+        margin: 0 24px;
+    }
+
+
+    &__carousel {
+        width: 200px;
+    }
+
+
+    &--mini &__details {
+        width: 155px;
+        min-width: 155px;
+    }
+
+    &--mini  &__amount {
         margin: 0 4px;
     }
 
-
-    &__img-container {
+    &--mini &__carousel {
         margin-left: 4px;
         flex-grow: 1;
+      
     }
-
-    &__img {
-        width: 100%;
-    }
-
 
 }

@@ -7,7 +7,6 @@ import Query from '@Components/Query'
 import ProductHeader from '@Components/ProductHeader'
 import ProductAttributes from '@Components/ProductAttributes'
 import ProductPrice from '@Components/ProductPrice'
-import ActionButton from '@Components/ActionButton'
 import ModalTrigger from '@Components/Modal/ModalTrigger'
 import { getProductQuery } from '@Queries'
 import './ProductPage.scss'
@@ -33,11 +32,11 @@ class ProductPage extends React.Component {
     }))
   }
 
-  selectAttribute(attrId, itemId) {
+  selectAttribute(attrId, attrValue) {
     this.setState((prev) => ({
       attributesSelection: {
         ...prev.attributesSelection,
-        [attrId]: itemId,
+        [attrId]: attrValue,
       },
     }))
   }
@@ -116,7 +115,7 @@ class ProductPage extends React.Component {
                       <ProductPrice className='price__value' prices={prices} />
                     </div>
                     <ModalTrigger name='minicart' events={['click']}>
-                      <ActionButton
+                      <button
                         className='details__action-btn'
                         onClick={() =>
                           addItemToCart({
@@ -127,7 +126,7 @@ class ProductPage extends React.Component {
                         }
                       >
                         Add to cart
-                      </ActionButton>
+                      </button>
                     </ModalTrigger>
                     <p
                       className='details__description'

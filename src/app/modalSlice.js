@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   name: null,
-  position: null,
 }
 
 export const modalSlice = createSlice({
@@ -10,16 +9,11 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     showModal: (state, action) => {
-      const { name, position } = action.payload
+      const { name } = action.payload
       state.name = name
-      state.position = position
     },
     hideModal: (state) => {
       state.name = null
-      state.position = null
-    },
-    updatePosition(state, action) {
-      state.position = action.payload
     },
   },
 })

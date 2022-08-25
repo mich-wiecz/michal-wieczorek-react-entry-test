@@ -16,6 +16,7 @@ import ProductHeader from '@Components/ProductHeader'
 import ProductAttributes from '@Components/ProductAttributes'
 import ProductPrice from '@Components/ProductPrice'
 import AmountChanger from '@Components/AmountChanger'
+import Carousel from '@Components/Carousel'
 import './CartItem.scss'
 
 class CartItem extends React.Component {
@@ -66,7 +67,7 @@ class CartItem extends React.Component {
     const {
       className = '',
       apolloClient,
-      version,
+      variant,
       productId,
       productIndex,
       amount,
@@ -79,7 +80,7 @@ class CartItem extends React.Component {
     } = this.props
 
     return (
-      <div className={`cart-item cart-item--${version} ${className}`}>
+      <div className={`cart-item cart-item--${variant} ${className}`}>
         <Query
           apolloClient={apolloClient}
           query={getProductQuery}
@@ -104,7 +105,7 @@ class CartItem extends React.Component {
                 <div className='cart-item__details'>
                   <ProductHeader
                     className='cart-item__header'
-                    version={version}
+                    variant={variant}
                     brand={brand}
                     name={name}
                     onClick={() => history.push(`/${category}/${productId}`)}
@@ -113,36 +114,42 @@ class CartItem extends React.Component {
                     className='cart-item__price'
                     prices={prices}
                     currency={currency}
-                    version={version}
+                    variant={variant}
                   />
                   <ProductAttributes
                     className='cart-item__attributes'
-                    version={version}
+                    variant={variant}
                     attributes={attributes}
                     selection={selectedAttributes}
-                    onSelected={(attributeId, itemId) =>
+                    onSelected={(attributeId, attributeValue) =>
                       updateCartItemAttribute({
                         productIndex,
                         attributeId,
-                        itemId,
+                        attributeValue,
                       })
                     }
                   />
                 </div>
                 <AmountChanger
                   className='cart-item__amount'
-                  version={version}
+                  variant={variant}
                   amount={amount}
                   onIncrease={() => increaseCartItemAmount(productIndex)}
                   onDecrease={() => decreaseCartItemAmount(productIndex)}
                 />
-                <div className='cart-item__img-container'>
+                <Carousel
+                  className='cart-item__carousel'
+                  gallery={variant === 'mini' ? [gallery[0]] : gallery}
+                  alt='Product'
+                  orientation='horizontal'
+                />
+                {/* <div className='cart-item__img-container'>
                   <img
                     src={gallery[0]}
                     alt='Product'
                     className='cart-item__img'
                   />
-                </div>
+                </div> */}
               </>
             )
           }}

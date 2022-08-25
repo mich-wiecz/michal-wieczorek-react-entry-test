@@ -52,8 +52,8 @@ export const userSlice = createSlice({
         : state.cart[index].amount--
     },
     updateCartItemAttribute(state, action) {
-      const { productIndex, attributeId, itemId } = action.payload
-      state.cart[productIndex].attributes[attributeId] = itemId
+      const { productIndex, attributeId, attributeValue } = action.payload
+      state.cart[productIndex].attributes[attributeId] = attributeValue
     },
     replaceCartAttributes(state, action) {
       const { itemIndex, attributes } = action.payload

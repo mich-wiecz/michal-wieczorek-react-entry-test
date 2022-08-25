@@ -10,6 +10,7 @@ class Modal extends React.Component {
     this.state = {
       mounted: false,
       active: false,
+      modalPosition: null,
     }
   }
 
@@ -32,29 +33,40 @@ class Modal extends React.Component {
     )
   }
 
-  getPosition() {
-    const { relativePosition, position } = this.props
+  calculateModalPosition() {
+    const { element, position } = this.props
+    if (!position) {
+      return null
+    }
 
-    if (position) {
+    if (typeof position === 'object') {
       return position
     }
 
-    if (!relativePosition) {
-      return {
-        top: 0,
-        left: '50%',
-      }
-    }
-    return relativePosition
+    return element
+      ? position({
+          ...JSON.parse(JSON.stringify(element.getBoundingClientRect())),
+          windowWidth: window.innerWidth,
+          windowHeight: window.innerHeight,
+        })
+      : null
+  }
+
+  updateModalPosition() {
+    this.setState(() => ({
+      modalPosition: this.calculateModalPosition(),
+    }))
   }
 
   componentDidMount() {
     this.setState({
       ...this.state,
       mounted: true,
+      modalPosition: this.calculateModalPosition(),
     })
 
     window.addEventListener('click', this.handleClickOutside.bind(this))
+    window.addEventListener('resize', this.updateModalPosition.bind(this))
   }
 
   componentDidUpdate(prev) {
@@ -65,11 +77,13 @@ class Modal extends React.Component {
       setTimeout(() => {
         this.setState(() => ({ active: true }))
       }, 1)
+      this.updateModalPosition()
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClickOutside.bind(this))
+    window.removeEventListener('resize', this.updateModalPosition.bind(this))
   }
 
   render() {
@@ -82,24 +96,26 @@ class Modal extends React.Component {
       transition = false,
     } = this.props
 
-    if (!this.state.mounted || name !== currModal) {
+    const { modalPosition, mounted, active } = this.state
+
+    if (!mounted || name !== currModal) {
       return null
     }
+
+    console.log(modalPosition)
 
     return ReactDOM.createPortal(
       <>
         <div
           className={`modal__background ${
             !backdrop ? 'modal__background--disabled' : ''
-          } ${transition ? 'transition' : ''} ${
-            this.state.active ? 'active' : ''
-          }`}
+          } ${transition ? 'transition' : ''} ${active ? 'active' : ''}`}
         />
         <div
           className={`${className} modal ${transition ? 'transition' : ''} ${
-            this.state.active ? 'active' : ''
+            active ? 'active' : ''
           }`}
-          style={this.getPosition()}
+          style={modalPosition}
           onClick={(e) => e.stopPropagation()}
         >
           {children}
@@ -112,7 +128,6 @@ class Modal extends React.Component {
 
 const mapStateToProps = (state) => ({
   currModal: state.modal.name,
-  relativePosition: state.modal.position,
 })
 const mapDispatchToProps = { hideModal }
 export default connect(mapStateToProps, mapDispatchToProps, null)(Modal)

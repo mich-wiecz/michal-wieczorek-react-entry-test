@@ -78,15 +78,17 @@
             }
 
             .price {
+                margin-top: 12px;
                 margin-bottom: 20px;
 
                 &__heading {
-                    margin-bottom: 10px;
                     @include mixins.subheading;
+                    margin-bottom: 10px;
                 }
             }
 
             &__action-btn {
+                @include mixins.actionButton;
                 width: 100%;
             }
 
