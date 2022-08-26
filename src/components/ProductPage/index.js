@@ -114,7 +114,7 @@ class ProductPage extends React.Component {
                       <h5 className='price__heading'>Price:</h5>
                       <ProductPrice className='price__value' prices={prices} />
                     </div>
-                    <ModalTrigger name='minicart' events={['click']}>
+                    <ModalTrigger name='minicart' disruptive events={['click']}>
                       <button
                         className='details__action-btn'
                         onClick={() =>

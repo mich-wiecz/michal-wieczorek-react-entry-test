@@ -1,13 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { hideModal } from '@/app/modalSlice'
+import { hideModal, hideOtherModals } from '@/app/modalSlice'
 import './Modal.scss'
 
 class Modal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      isOn: false,
       mounted: false,
       active: false,
       modalPosition: null,
@@ -15,22 +16,18 @@ class Modal extends React.Component {
   }
 
   handleClickOutside() {
-    const { hideModal, transition = false } = this.props
+    const {
+      name,
+      hideModal,
+      transition = false,
+      disruptive = false,
+    } = this.props
 
     if (!transition) {
       return hideModal()
     }
 
-    this.setState(
-      () => ({
-        active: false,
-      }),
-      () => {
-        setTimeout(() => {
-          hideModal()
-        }, 400)
-      }
-    )
+    hideModal(disruptive && name)
   }
 
   calculateModalPosition() {
@@ -58,26 +55,55 @@ class Modal extends React.Component {
     }))
   }
 
+  showModal() {
+    this.setState(
+      () => ({ isOn: true }),
+      () => {
+        setTimeout(() => {
+          this.setState(() => ({ active: true }))
+        }, 1)
+      }
+    )
+    this.updateModalPosition()
+  }
+
+  closeModal() {
+    this.setState(
+      () => ({
+        active: false,
+      }),
+      () => {
+        setTimeout(() => {
+          this.setState(() => ({ isOn: false }))
+        }, 400)
+      }
+    )
+  }
+
   componentDidMount() {
     this.setState({
-      ...this.state,
       mounted: true,
       modalPosition: this.calculateModalPosition(),
     })
+
+    if (this.props.currModals.includes(this.props.name)) {
+      this.showModal()
+    }
 
     window.addEventListener('click', this.handleClickOutside.bind(this))
     window.addEventListener('resize', this.updateModalPosition.bind(this))
   }
 
   componentDidUpdate(prev) {
-    const wasOn = prev.currModal === prev.name
-    const isOn = this.props.currModal === this.props.name
+    const wasOn = prev.currModals.includes(prev.name)
+    const isOn = this.props.currModals.includes(this.props.name)
 
     if (!wasOn && isOn) {
-      setTimeout(() => {
-        this.setState(() => ({ active: true }))
-      }, 1)
-      this.updateModalPosition()
+      this.showModal()
+    }
+
+    if (wasOn && !isOn) {
+      this.closeModal()
     }
   }
 
@@ -90,19 +116,19 @@ class Modal extends React.Component {
     const {
       className = '',
       name,
-      currModal,
+      currModals,
+      disruptive,
       children,
       backdrop = true,
       transition = false,
+      hideOtherModals,
     } = this.props
 
-    const { modalPosition, mounted, active } = this.state
+    const { modalPosition, mounted, active, isOn } = this.state
 
-    if (!mounted || name !== currModal) {
+    if (!mounted || !isOn) {
       return null
     }
-
-    console.log(modalPosition)
 
     return ReactDOM.createPortal(
       <>
@@ -115,8 +141,14 @@ class Modal extends React.Component {
           className={`${className} modal ${transition ? 'transition' : ''} ${
             active ? 'active' : ''
           }`}
+          data-modal={name}
           style={modalPosition}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            if (disruptive && currModals.length > 1) {
+              hideOtherModals(name)
+            }
+            e.stopPropagation()
+          }}
         >
           {children}
         </div>
@@ -127,7 +159,7 @@ class Modal extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currModal: state.modal.name,
+  currModals: state.modal.current,
 })
-const mapDispatchToProps = { hideModal }
+const mapDispatchToProps = { hideModal, hideOtherModals }
 export default connect(mapStateToProps, mapDispatchToProps, null)(Modal)

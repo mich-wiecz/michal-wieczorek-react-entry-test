@@ -36,7 +36,7 @@ class ProductCard extends React.Component {
             alt='product-card'
             className='product-card__image'
           />
-          <ModalTrigger name='minicart' events={['click']}>
+          <ModalTrigger name='minicart' disruptive events={['click']}>
             <button
               type='button'
               className='product-card__add-btn add-btn'

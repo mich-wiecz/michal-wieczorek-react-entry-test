@@ -5,6 +5,7 @@
 .currencies {
     background-color: $background;
     @include mixins.shadow;
+    z-index: 51;
     
     &__list {
         width: 100%;

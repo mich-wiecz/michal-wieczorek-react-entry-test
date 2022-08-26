@@ -9,13 +9,14 @@ import { getCurrenciesQuery } from '@Queries'
 import './CurrenciesDropdown.scss'
 
 class CurrenciesDropdown extends React.Component {
+  handleCurrencySelection(symbol) {
+    const { changeCurrency, hideModal } = this.props
+    changeCurrency(symbol)
+    hideModal('currencies')
+  }
+
   render() {
-    const {
-      className = '',
-      apolloClient,
-      currency,
-      changeCurrency,
-    } = this.props
+    const { className = '', apolloClient, currency } = this.props
 
     return (
       <Modal
@@ -23,7 +24,7 @@ class CurrenciesDropdown extends React.Component {
         name='currencies'
         position={{ top: '63px', right: 0 }}
         backdrop={false}
-        transition={true}
+        transition
       >
         <Query
           apolloClient={apolloClient}
@@ -40,7 +41,7 @@ class CurrenciesDropdown extends React.Component {
                   className={`list__item item ${
                     currency === symbol ? 'item--current' : ''
                   }`}
-                  onClick={() => changeCurrency(symbol)}
+                  onClick={() => this.handleCurrencySelection(symbol)}
                 >
                   <div className='item__content'>
                     <span className='item__symbol'>{symbol}</span>
