@@ -19,7 +19,6 @@ export const modalSlice = createSlice({
         : []
     },
     hideOtherModals(state, action) {
-      console.log('others')
       const modalName = action.payload
       state.current = state.current.filter((modal) => modal === modalName)
     },

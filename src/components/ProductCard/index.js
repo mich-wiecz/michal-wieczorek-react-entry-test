@@ -22,6 +22,7 @@ class ProductCard extends React.Component {
       addItemToCart,
     } = this.props
     const { symbol, amount } = getPrice(prices, currency)
+
     return (
       <div
         role='button'
@@ -59,7 +60,7 @@ class ProductCard extends React.Component {
         </h4>
         <span className='product-card__prize'>
           {symbol}
-          {amount}
+          {amount.toFixed(2)}
         </span>
         <div className='product-card__veil' />
       </div>

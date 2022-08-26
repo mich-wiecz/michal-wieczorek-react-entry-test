@@ -22,7 +22,7 @@ class ProductPrice extends React.Component {
         {...props}
       >
         <span>{currency}</span>
-        <span>{amount}</span>
+        <span>{amount.toFixed(2)}</span>
       </div>
     )
   }

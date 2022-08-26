@@ -143,13 +143,6 @@ class CartItem extends React.Component {
                   alt='Product'
                   orientation='horizontal'
                 />
-                {/* <div className='cart-item__img-container'>
-                  <img
-                    src={gallery[0]}
-                    alt='Product'
-                    className='cart-item__img'
-                  />
-                </div> */}
               </>
             )
           }}

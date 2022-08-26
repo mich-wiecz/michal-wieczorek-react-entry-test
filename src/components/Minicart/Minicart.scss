@@ -9,7 +9,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     @include mixins.customScrollbar($track-color: $dark);
-    background-color: $background;
+    background-color: $light;
 
     &__header {
         margin-bottom: 32px;
@@ -65,7 +65,7 @@
         text-decoration: none;
         &--light {
             margin-right: 10px;
-            background-color: $background !important;
+            background-color: $light !important;
             color: $dark !important;
             border: 1px solid $dark !important;
         }

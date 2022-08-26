@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals'
 import { store } from './app/store'
 import { Provider } from 'react-redux'
 import App from '@Components/App'
-import './index.scss'
+import '@Styles/global.scss'
 
 const apolloClient = new ApolloClient({
   uri: 'http://localhost:4000/',

@@ -19,15 +19,15 @@ class CartPage extends React.Component {
         <TwoColsTable
           className='cart__summary'
           data={{
-            'Tax 21%': `${currency}${tax}`,
+            'Tax 21%': `${currency}${tax.toFixed(2)}`,
             Quantity: amountTotal,
             Total: {
-              value: `${currency}${priceTotal + tax}`,
+              value: `${currency}${(priceTotal + tax).toFixed(2)}`,
               highlightedTitle: true,
             },
           }}
         />
-        <button className='cart__order-btn'>Order</button>
+        {amountTotal && <button className='cart__order-btn'>Order</button>}
       </Layout>
     )
   }

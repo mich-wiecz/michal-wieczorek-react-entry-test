@@ -3,7 +3,7 @@
 
 
 .currencies {
-    background-color: $background;
+    background-color: $light;
     @include mixins.shadow;
     z-index: 51;
     
@@ -27,7 +27,7 @@
         .item {
             display: flex;
             align-items: center;
-            background-color: $background;
+            background-color: $light;
             font-size: 18px;
             line-height: 160%;
             cursor: pointer;
