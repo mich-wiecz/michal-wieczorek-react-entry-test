@@ -38,21 +38,39 @@ class CartItem extends React.Component {
       updateCartItemPrices({ itemIndex: productIndex, prices: product.prices })
     }
 
-    const areEveryAttributePresent = product.attributes.every(
-      ({ id }) => id in selectedAttributes
+    const areEveryAttributeValid = product.attributes.every(
+      ({ id, name, items }) => {
+        if (!(id in selectedAttributes)) return false
+        if (name === 'Size') return true
+        return items.some(({ value }) => value === selectedAttributes[id])
+      }
     )
 
-    if (areEveryAttributePresent) return
+    if (areEveryAttributeValid) return
+
+    function isSelectedAttributeValid(attrId, attrItems, selectedAttributes) {
+      if (!(attrId in selectedAttributes)) return false
+
+      const selectedValue = selectedAttributes[attrId]
+      const isSelectedInAttrs = attrItems.some(
+        ({ value }) => value === selectedValue
+      )
+
+      return isSelectedInAttrs
+    }
 
     const defaultAttrs = getDefaultAttributes(product.attributes)
     const updatedSelectedAttrs = Object.entries(defaultAttrs).reduce(
-      (result, [attrId, attrItemId]) => {
+      (result, [attrId, attrValue], index) => {
         return {
           ...result,
-          [attrId]:
-            attrId in selectedAttributes
-              ? selectedAttributes[attrId]
-              : attrItemId,
+          [attrId]: isSelectedAttributeValid(
+            attrId,
+            product.attributes[index].items,
+            selectedAttributes
+          )
+            ? selectedAttributes[attrId]
+            : attrValue,
         }
       },
       {}

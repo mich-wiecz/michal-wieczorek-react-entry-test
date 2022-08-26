@@ -38,6 +38,7 @@ class Query extends React.Component {
         )
       })
       .catch((error) => {
+        console.error(error)
         this.setState({
           ...this.state,
           loading: false,

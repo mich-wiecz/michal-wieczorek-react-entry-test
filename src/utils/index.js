@@ -1,11 +1,11 @@
-import ClassNames from './ClassNames'
+import ClassNamesHelper from './ClassNames'
 export {
   getPrice,
   arePricesArraysEqual,
   areSizesEqual,
   getDefaultAttributes,
 } from './product'
-export const classNames = ClassNames
+export const ClassNames = ClassNamesHelper
 
 export function capitalize(value) {
   return value[0].toUpperCase() + value.slice(1)
