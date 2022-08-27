@@ -15,7 +15,7 @@ class Minicart extends React.Component {
     return (
       <Modal
         name='minicart'
-        disruptive
+        type='modal'
         className='minicart'
         transition={true}
         backdrop={true}

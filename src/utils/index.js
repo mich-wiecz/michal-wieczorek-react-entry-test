@@ -6,6 +6,13 @@ export {
   getDefaultAttributes,
 } from './product'
 export const ClassNames = ClassNamesHelper
+export {
+  applyFocusTrap,
+  removeFocusTrap,
+  applyInertia,
+  removeInertia,
+  focusFirstFocusableChild,
+} from './focus'
 
 export function capitalize(value) {
   return value[0].toUpperCase() + value.slice(1)

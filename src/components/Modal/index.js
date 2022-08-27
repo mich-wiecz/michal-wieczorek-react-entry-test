@@ -2,6 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { hideModal, hideOtherModals } from '@/app/modalSlice'
+import {
+  applyFocusTrap,
+  removeFocusTrap,
+  focusFirstFocusableChild,
+} from '@Utils'
 import './Modal.scss'
 
 class Modal extends React.Component {
@@ -13,21 +18,20 @@ class Modal extends React.Component {
       active: false,
       modalPosition: null,
     }
+
+    this.modal = React.createRef()
   }
 
   handleClickOutside() {
-    const {
-      name,
-      hideModal,
-      transition = false,
-      disruptive = false,
-    } = this.props
+    const { name, hideModal, type = 'dialog' } = this.props
 
-    if (!transition) {
-      return hideModal()
-    }
+    hideModal(type === 'modal' && name)
+  }
 
-    hideModal(disruptive && name)
+  handleKeydown(e) {
+    if (e.key !== 'Escape') return
+    const { name, hideModal, type = 'dialog' } = this.props
+    hideModal(type === 'modal' && name)
   }
 
   calculateModalPosition() {
@@ -62,6 +66,9 @@ class Modal extends React.Component {
         setTimeout(() => {
           this.setState(() => ({ active: true }))
         }, 1)
+        focusFirstFocusableChild(this.modal.current)
+        applyFocusTrap(this.modal.current)
+        // this.modal.current.scrollTo({ top: 0, behavior: 'smooth' })
       }
     )
     this.updateModalPosition()
@@ -78,6 +85,8 @@ class Modal extends React.Component {
         }, 400)
       }
     )
+
+    removeFocusTrap(this.modal.current)
   }
 
   componentDidMount() {
@@ -91,6 +100,7 @@ class Modal extends React.Component {
     }
 
     window.addEventListener('click', this.handleClickOutside.bind(this))
+    window.addEventListener('keydown', this.handleKeydown.bind(this))
     window.addEventListener('resize', this.updateModalPosition.bind(this))
   }
 
@@ -109,6 +119,7 @@ class Modal extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClickOutside.bind(this))
+    window.removeEventListener('keydown', this.handleKeydown.bind(this))
     window.removeEventListener('resize', this.updateModalPosition.bind(this))
   }
 
@@ -117,7 +128,7 @@ class Modal extends React.Component {
       className = '',
       name,
       currModals,
-      disruptive,
+      type,
       children,
       backdrop = true,
       transition = false,
@@ -137,14 +148,15 @@ class Modal extends React.Component {
             !backdrop ? 'modal__background--disabled' : ''
           } ${transition ? 'transition' : ''} ${active ? 'active' : ''}`}
         />
+
         <div
+          ref={this.modal}
           className={`${className} modal ${transition ? 'transition' : ''} ${
             active ? 'active' : ''
           }`}
-          data-modal={name}
           style={modalPosition}
           onClick={(e) => {
-            if (disruptive && currModals.length > 1) {
+            if (type === 'modal' && currModals.length > 1) {
               hideOtherModals(name)
             }
             e.stopPropagation()

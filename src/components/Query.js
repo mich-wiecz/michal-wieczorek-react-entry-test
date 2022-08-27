@@ -80,9 +80,13 @@ class Query extends React.Component {
 
     return (
       <>
-        {loading && <Loader size={loaderSize} className={loaderClassName} />}
+        {loading && (
+          <Loader size={loaderSize} className={loaderClassName} tabIndex={0} />
+        )}
         {errors.length > 0 && (
-          <ErrorAlert className={errorClassName}>{errorMessage}</ErrorAlert>
+          <ErrorAlert tabIndex={0} className={errorClassName}>
+            {errorMessage}
+          </ErrorAlert>
         )}
         {data && this.props.children(data)}
       </>

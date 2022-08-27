@@ -9,7 +9,7 @@ class Header extends React.Component {
   render() {
     const { apolloClient, category } = this.props
     return (
-      <header className={`${this.props.className} header`}>
+      <header id='site-header' className={`${this.props.className} header`}>
         <div className='header__content'>
           <Nav
             className='header__nav'

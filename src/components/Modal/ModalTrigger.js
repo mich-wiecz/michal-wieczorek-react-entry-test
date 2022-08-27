@@ -5,7 +5,7 @@ import { capitalize } from '@Utils'
 
 class ModalTrigger extends React.Component {
   getEventsListeners() {
-    const { events, showModal, name, disruptive = false } = this.props
+    const { events, showModal, name, type = 'dialog' } = this.props
 
     return events.reduce((result, eventType) => {
       return {
@@ -14,7 +14,7 @@ class ModalTrigger extends React.Component {
           if (e.type === 'click') {
             e.stopPropagation()
           }
-          showModal({ name, isDisruptive: disruptive })
+          showModal({ name, isDisruptive: type === 'modal' })
         },
       }
     }, {})
@@ -26,8 +26,5 @@ class ModalTrigger extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  modal: state.modal.name,
-})
 const mapDispatchToProps = { showModal }
-export default connect(mapStateToProps, mapDispatchToProps)(ModalTrigger)
+export default connect(() => ({}), mapDispatchToProps)(ModalTrigger)

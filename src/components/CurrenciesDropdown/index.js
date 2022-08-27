@@ -26,33 +26,35 @@ class CurrenciesDropdown extends React.Component {
         backdrop={false}
         transition
       >
-        <Query
-          apolloClient={apolloClient}
-          query={getCurrenciesQuery}
-          loaderSize={114}
-          errorMessage='Could not fetch available currencies'
-        >
-          {(data) => (
-            <ul className='currencies__list list'>
-              {data.currencies.map(({ label, symbol }) => (
-                <li
-                  key={symbol}
-                  role='button'
-                  className={`list__item item ${
-                    currency === symbol ? 'item--current' : ''
-                  }`}
-                  onClick={() => this.handleCurrencySelection(symbol)}
-                >
-                  <div className='item__content'>
-                    <span className='item__symbol'>{symbol}</span>
-                    <span className='item__divider'></span>
-                    <span className='item__label'>{label}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Query>
+        <>
+          <Query
+            apolloClient={apolloClient}
+            query={getCurrenciesQuery}
+            loaderSize={114}
+            errorMessage='Could not fetch available currencies'
+          >
+            {(data) => (
+              <ul className='currencies__list list'>
+                {data.currencies.map(({ label, symbol }) => (
+                  <li key={symbol}>
+                    <button
+                      className={`list__item item ${
+                        currency === symbol ? 'item--current' : ''
+                      }`}
+                      onClick={() => this.handleCurrencySelection(symbol)}
+                    >
+                      <div className='item__content'>
+                        <span className='item__symbol'>{symbol}</span>
+                        <span className='item__divider'></span>
+                        <span className='item__label'>{label}</span>
+                      </div>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Query>
+        </>
       </Modal>
     )
   }
