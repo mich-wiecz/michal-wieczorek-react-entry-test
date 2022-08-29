@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { classNames as c } from '@Utils'
+import { classNames as c, applyInertia } from '@Utils'
 import { connect } from 'react-redux'
 import { addItemToCart } from '@/app/userSlice'
 import { getDefaultAttributes } from '@Utils'
@@ -58,7 +58,12 @@ class ProductPage extends React.Component {
           apolloClient={apolloClient}
           query={getProductQuery}
           variables={{ id: productId }}
-          onLoaded={(data) => this.initializeAttributesState(data)}
+          onLoaded={(data) => {
+            this.initializeAttributesState(data)
+            if (!data.product.inStock) {
+              applyInertia('#' + productId)
+            }
+          }}
           errorMessage='Error trying to fetch product'
           loaderSize={150}
           loaderClassName='product-loader'
@@ -74,7 +79,10 @@ class ProductPage extends React.Component {
               inStock,
             } = data.product
             return (
-              <div className={c('product', !inStock && '--unavailable')}>
+              <div
+                id={productId}
+                className={c('product', !inStock && '--unavailable')}
+              >
                 <div
                   role='alert'
                   aria-hidden={!inStock}
