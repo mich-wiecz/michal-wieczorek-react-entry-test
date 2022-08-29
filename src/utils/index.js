@@ -1,11 +1,10 @@
-import ClassNamesHelper from './ClassNames'
+export { classNames } from './class-names'
 export {
   getPrice,
   arePricesArraysEqual,
   areSizesEqual,
   getDefaultAttributes,
 } from './product'
-export const ClassNames = ClassNamesHelper
 export {
   applyFocusTrap,
   removeFocusTrap,
