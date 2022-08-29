@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import { connect } from 'react-redux'
 import { selectItemsTotal, selectTotalPrice } from '@/app/userSlice.js'
 import { Link } from 'react-router-dom'
@@ -12,11 +14,15 @@ class Minicart extends React.Component {
     const { apolloClient, container, totalAmount, totalPrice, currency } =
       this.props
 
+    const c = classNames.setParentClass('minicart')
+
     return (
       <Modal
+        className={c()}
         name='minicart'
         type='modal'
-        className='minicart'
+        aria-labelledby='minicart-header'
+        aria-describedby='minicart-desc'
         transition={true}
         backdrop={true}
         element={container}
@@ -25,32 +31,49 @@ class Minicart extends React.Component {
           right: `calc(100vw - ${right + 16}px)`,
         })}
       >
-        <header className='minicart__header'>
-          <h2 className='minicart__title'>My bag, </h2>
-          <span className='minicart__total-amount'>{totalAmount} items</span>
+        <header id='minicart-header' className={c('__header')}>
+          <h2 className={c('__title')}>My bag, </h2>
+          <span className={c('__total-amount')}>
+            {totalAmount} {totalAmount === 1 ? 'item' : 'items'}
+          </span>
         </header>
+        <p id='minicart-desc' className='sr-only'>
+          Mini version of the cart, press escape to close
+        </p>
         <CartItemsListing
-          className='minicart__products'
+          className={c('__products')}
           apolloClient={apolloClient}
           variant='mini'
         />
-        <div className='minicart__total'>
-          <span className='minicart__total-label'>Total</span>
+        <div className={c('__total')}>
+          <span className={c('__total-label')}>Total</span>
           <ProductPrice
-            className='minicart__total-price'
+            className={c('__total-price')}
             price={totalPrice}
             currency={currency}
           />
         </div>
-        <div className='minicart__actions'>
-          <Link to='/cart' className='minicart__btn minicart__btn--light'>
+        <div className={c('__actions')}>
+          <Link
+            to='/cart'
+            aria-label='Cart page'
+            className={c('__btn', '--light')}
+          >
             View bag
           </Link>
-          <button className='minicart__btn'>Check out</button>
+          <button className={c('__btn')}>Check out</button>
         </div>
       </Modal>
     )
   }
+}
+
+Minicart.propTypes = {
+  apolloClient: PropTypes.object.isRequired,
+  container: PropTypes.object,
+  totalAmount: PropTypes.number.isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  currency: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = (state) => ({

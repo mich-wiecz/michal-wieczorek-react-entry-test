@@ -1,42 +1,48 @@
+@use "@Styles/colors" as *;
+
 .cart-item {
     width: 100%;
     display: flex;
+
+
     &__details {
         flex-grow: 1;
+
+        &--mini {
+            width: 155px;
+            min-width: 155px;
+        }
     }
 
-    &__header:hover {
+    &__header {
+       color: $dark;
+
+       &:hover {
         text-decoration: underline;
-        cursor: pointer;
+       }
     }
 
     &__header, &__price {
         margin-bottom: 8px;
     }
 
+
     &__amount {
         margin: 0 24px;
+
+        &--mini {
+            margin: 0 4px;
+        }
     }
 
 
     &__carousel {
         width: 200px;
-    }
 
-
-    &--mini &__details {
-        width: 155px;
-        min-width: 155px;
-    }
-
-    &--mini  &__amount {
-        margin: 0 4px;
-    }
-
-    &--mini &__carousel {
-        margin-left: 4px;
-        flex-grow: 1;
-      
+        &--mini {
+            margin-left: 4px;
+            flex-grow: 1;
+        }
     }
 
 }

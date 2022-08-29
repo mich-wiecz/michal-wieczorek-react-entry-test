@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import Header from '@Components/Header'
 import Minicart from '@Components/Minicart'
 import './Layout.scss'
@@ -15,23 +17,23 @@ class Layout extends React.Component {
   }
 
   render() {
-    const { className = '', category, apolloClient } = this.props
+    const { className, category, apolloClient, children } = this.props
+
+    const c = classNames.setParentClass('layout')
 
     return (
-      <div className='layout'>
+      <div className={c()}>
         <div
           ref={(e) => !this.state.element && this.setState({ element: e })}
           id='layout'
-          className='layout__content'
+          className={c('__content')}
         >
           <Header
             apolloClient={apolloClient}
             category={category}
-            className='layout__header'
+            className={c('__header')}
           />
-          <main className={`layout__main ${className}`}>
-            {this.props.children}
-          </main>
+          <main className={c('__main', className)}>{children}</main>
           <Minicart
             apolloClient={apolloClient}
             container={this.state.element}
@@ -40,6 +42,15 @@ class Layout extends React.Component {
       </div>
     )
   }
+}
+
+Layout.propTypes = {
+  category: PropTypes.string,
+  apolloClient: PropTypes.object.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
 }
 
 export default Layout

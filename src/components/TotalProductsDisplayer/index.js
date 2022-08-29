@@ -9,6 +9,7 @@ class TotalProductsDisplayer extends React.Component {
     return (
       <span className={`${className} total-products`}>
         {total > 99 ? '99+' : total}
+        <span className='sr-only'>products in the cart</span>
       </span>
     )
   }

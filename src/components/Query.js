@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Loader from '@Components/Loader'
 import ErrorAlert from '@Components/ErrorAlert'
 import { areDeepEqual } from '@Utils'
@@ -92,6 +93,18 @@ class Query extends React.Component {
       </>
     )
   }
+}
+
+Query.propTypes = {
+  apolloClient: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired,
+  variables: PropTypes.object,
+  transformer: PropTypes.func,
+  onLoaded: PropTypes.func,
+  loaderSize: PropTypes.number,
+  loaderClassName: PropTypes.string,
+  errorMessage: PropTypes.string,
+  errorClassName: PropTypes.string,
 }
 
 export default Query

@@ -9,17 +9,18 @@
     flex-direction: column;
     background-color: $light;
     cursor: pointer;
-    transition: box-shadow .15s ease-in;
+    transition: box-shadow 0.15s ease-in;
 
-    &:hover {
+    &:hover,
+    &:focus {
         @include mixins.shadow;
     }
 
     &__image-container {
         flex-grow: 1;
-      position: relative;
-      margin-bottom: 24px;
-      width: 100%;  
+        position: relative;
+        margin-bottom: 24px;
+        width: 100%;
     }
 
     &__image {
@@ -30,11 +31,13 @@
         position: absolute;
         top: 100%;
         right: 4%;
-       transform: translateY(-50%) scale(0);
-       transition: transform .3s ease-in;
+        transform: translateY(-50%) scale(0);
+        transition: transform 0.3s ease-in;
     }
 
-    &:hover .product-card__add-btn {
+    &:hover &__add-btn,
+    &:focus &__add-btn,
+    &__add-btn:focus {
         transform: translateY(-50%) scale(1);
     }
 
@@ -66,7 +69,8 @@
         line-height: 160%;
     }
 
-    &__name, &__prize {
+    &__name,
+    &__prize {
         display: inline-flex;
         align-items: center;
         font-size: 18px;
@@ -98,9 +102,5 @@
 
     &--unavailable .product-card__unavailable-info {
         display: flex;
-     }
-
-
-
-
-   }
+    }
+}

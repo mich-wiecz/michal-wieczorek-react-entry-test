@@ -2,123 +2,111 @@
 @use "@Styles/mixins";
 
 .attrs {
+    &__name {
+        @include mixins.subheading;
 
-    &__section {
-        margin-bottom: 24px;
-    }
-
-    .attrs-section {
-
-        &__name {
-            @include mixins.subheading;
-        }
-
-
-        .attrs-list {
-            list-style: none;
-            display: flex;
-
-            .attribute {
-                transition: .3s ease-in-out;
-                cursor: pointer;
-
-                &--text {
-                    margin-right: 12px;
-                    padding: 8px;
-                    min-width: 63px;
-                    min-height: 45px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-family: "Source Sans Pro";
-                    font-size: 16px;
-                    line-height: 18px;
-                    letter-spacing: 5px;
-                    border: 1px solid $dark;
-                    background-color: $light;
-
-                    &.selected {
-                        background-color: $dark; 
-                        color: $light;
-                     }
-                }
-
-                &--swatch {
-                    margin-right: 8px;
-                    width: 36px;
-                    height: 36px;
-                    border: 2px solid $light;
-
-                    &.selected {
-                        box-shadow: 0 0 0 1px $primary;
-                    }
-                }
-            }
-
-       
-
-        }
-
-     
-    }
-
-
-    &--cart  &__section {
-        margin-bottom: 16px;
-    }
-
-
-    &--mini &__section {
-        margin-bottom: 8px;
-    }
-
-    &--mini div:nth-last-of-type(1).attrs-section {
-        margin: 0;
-    }
-
-    &--mini .attrs-section {
-        margin: 0 0 8px 0;
-
-        &__name {
+        &--mini {
             margin-bottom: 0;
-            font-family: 'Raleway';
+            font-family: "Raleway";
             font-weight: 400;
             font-size: 14px;
             line-height: 16px;
         }
-
-        .attrs-list {
-            flex-wrap: wrap;
-            .attribute {
-                margin-top: 8px;
-                &--text {
-                    margin-right: 8px;
-                    padding: 6px;
-                    min-width: 24px;
-                    min-height: auto;
-                    height: 24px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 14px;
-                    line-height: 22.4px;
-                    letter-spacing: 0;
-                    border: 1px solid $dark;
-                }
-    
-                &--swatch {
-                    margin-right: 10px;
-                    width: 20px;
-                    height: 20px;
-                    border: 3px solid $light;
-                }
-    
-            }
-
-         }
-
-      
     }
 
+    &__section {
+        border: none;
+        margin-bottom: 24px;
 
+        &--cart {
+            margin-bottom: 16px;
+        }
+
+        &--mini {
+            margin-bottom: 8px;
+        }
+    }
+
+    div:nth-last-of-type(1).attrs__section--mini {
+        margin: 0;
+    }
+
+    .attrs-list {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .attribute {
+        position: relative;
+        transition: 0.3s ease-in-out;
+        cursor: pointer;
+
+        &--mini {
+            margin-top: 8px;
+        }
+
+        &__radio {
+            position: absolute;
+            left: -9999px;
+        }
+
+        &__label {
+            display: block;
+            cursor: pointer;
+            &--text {
+                margin-right: 12px;
+                padding: 8px;
+                min-width: 63px;
+                min-height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: "Source Sans Pro";
+                font-size: 16px;
+                line-height: 18px;
+                letter-spacing: 5px;
+                border: 1px solid $dark !important;
+                background-color: $light;
+
+                &.selected {
+                    background-color: $dark;
+                    color: $light;
+                }
+            }
+
+            &--text.attribute__label--mini {
+                margin-right: 8px;
+                padding: 6px;
+                min-width: 24px;
+                width: auto !important;
+                min-height: auto;
+                height: 24px !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                line-height: 22.4px;
+                letter-spacing: 0;
+            }
+
+            &--swatch {
+                margin-right: 8px;
+                width: 36px;
+                height: 36px;
+                border: 2px solid $light;
+
+                &.selected {
+                    box-shadow: 0 0 0 1px $primary;
+                }
+            }
+
+            &--swatch.attribute__label--mini {
+                margin-right: 10px;
+                width: 20px;
+                height: 20px;
+                border: 1.5px solid $light;
+            }
+        }
+    }
 }

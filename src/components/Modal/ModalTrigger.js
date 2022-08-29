@@ -11,9 +11,10 @@ class ModalTrigger extends React.Component {
       return {
         ...result,
         [`on${capitalize(eventType)}`]: (e) => {
-          if (e.type === 'click') {
-            e.stopPropagation()
+          if (eventType === 'keyDown' && e.key !== 'Enter') {
+            return
           }
+          e.stopPropagation()
           showModal({ name, isDisruptive: type === 'modal' })
         },
       }

@@ -40,7 +40,6 @@ export function applyFocusTrap(container) {
 }
 
 export function removeFocusTrap(container) {
-  console.log('goodbye')
   document.removeEventListener('keydown', (e) => trapFocus(e, container))
 }
 

@@ -4,6 +4,7 @@ export function getPrice(prices, current) {
   const price = prices.find((price) => price.currency.symbol === current)
   return {
     amount: price.amount,
+    label: price.currency.label,
     symbol: current,
   }
 }

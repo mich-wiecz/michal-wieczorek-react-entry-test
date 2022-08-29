@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import { connect } from 'react-redux'
 import { addItemToCart } from '@/app/userSlice'
 import { getPrice, getDefaultAttributes } from '@Utils'
@@ -17,30 +19,26 @@ class ProductCard extends React.Component {
       gallery,
       prices,
       attributes,
-      onClick,
       currency,
       addItemToCart,
+      ...props
     } = this.props
-    const { symbol, amount } = getPrice(prices, currency)
+    const { symbol, label, amount } = getPrice(prices, currency)
+
+    const c = classNames.setParentClass('product-card')
 
     return (
-      <div
-        role='button'
-        className={`${className} product-card ${
-          !inStock ? 'product-card--unavailable' : ''
-        }`}
-        onClick={onClick}
-      >
-        <div className='product-card__image-container'>
-          <img
-            src={gallery[0]}
-            alt='product-card'
-            className='product-card__image'
-          />
-          <ModalTrigger name='minicart' type='modal' events={['click']}>
+      <div className={c(!inStock && '--unavailable', className)} {...props}>
+        <div className={c('__image-container')}>
+          <img src={gallery[0]} alt='product' className={c('__image')} />
+          <ModalTrigger
+            name='minicart'
+            type='modal'
+            events={['click', 'keyDown']}
+          >
             <button
-              type='button'
-              className='product-card__add-btn add-btn'
+              className={c('_|add-btn')}
+              tabIndex={inStock ? 0 : -1}
               onClick={() =>
                 addItemToCart({
                   id,
@@ -48,24 +46,47 @@ class ProductCard extends React.Component {
                   attributes: getDefaultAttributes(attributes) || {},
                 })
               }
+              aria-label='Add product with default options to the cart'
             >
-              <BasketSvg className='add-btn__icon' />
+              <BasketSvg className={c.raw('add-btn__icon')} aria-hidden />
             </button>
           </ModalTrigger>
-          <div className='product-card__unavailable-info'>Out of stock</div>
+          <div
+            role='alert'
+            aria-hidden={!inStock}
+            className={c('__unavailable-info')}
+          >
+            Out of stock
+          </div>
         </div>
 
-        <h4 className='product-card__name'>
-          {brand} {name}
+        <h4 className={c('__name')} aria-label='brand and name of the product'>
+          {brand}
+          {name}
         </h4>
-        <span className='product-card__prize'>
+        <span className={c('__prize')} aria-hidden>
           {symbol}
           {amount.toFixed(2)}
         </span>
-        <div className='product-card__veil' />
+        <span className='sr-only'>
+          {amount.toFixed(2)} {label}
+        </span>
+        <div className={c('__veil')} />
       </div>
     )
   }
+}
+
+ProductCard.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  brand: PropTypes.string.isRequired,
+  inStock: PropTypes.bool.isRequired,
+  gallery: PropTypes.arrayOf(PropTypes.string).isRequired,
+  prices: PropTypes.arrayOf(PropTypes.object).isRequired,
+  attributes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currency: PropTypes.string.isRequired,
+  addItemToCart: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

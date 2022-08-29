@@ -11,11 +11,19 @@ class Loader extends React.Component {
     }
 
     return (
-      <div style={style} className={`loader ${className}`} {...props}>
-        <div className='dot'></div>
-        <div className='dot'></div>
-        <div className='dot'></div>
-        <div className='dot'></div>
+      <div role='alert' aria-busy>
+        <p className='sr-only'>Loading</p>
+        <div
+          style={style}
+          className={`loader ${className}`}
+          aria-hidden
+          {...props}
+        >
+          <div className='dot'></div>
+          <div className='dot'></div>
+          <div className='dot'></div>
+          <div className='dot'></div>
+        </div>
       </div>
     )
   }

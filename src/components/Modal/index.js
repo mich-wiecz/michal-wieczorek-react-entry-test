@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { hideModal, hideOtherModals } from '@/app/modalSlice'
@@ -68,7 +70,6 @@ class Modal extends React.Component {
         }, 1)
         focusFirstFocusableChild(this.modal.current)
         applyFocusTrap(this.modal.current)
-        // this.modal.current.scrollTo({ top: 0, behavior: 'smooth' })
       }
     )
     this.updateModalPosition()
@@ -125,7 +126,7 @@ class Modal extends React.Component {
 
   render() {
     const {
-      className = '',
+      className,
       name,
       currModals,
       type,
@@ -133,6 +134,9 @@ class Modal extends React.Component {
       backdrop = true,
       transition = false,
       hideOtherModals,
+      hideModal,
+      position,
+      ...props
     } = this.props
 
     const { modalPosition, mounted, active, isOn } = this.state
@@ -141,19 +145,27 @@ class Modal extends React.Component {
       return null
     }
 
+    const c = classNames.setParentClass('modal')
+
     return ReactDOM.createPortal(
       <>
         <div
-          className={`modal__background ${
-            !backdrop ? 'modal__background--disabled' : ''
-          } ${transition ? 'transition' : ''} ${active ? 'active' : ''}`}
+          className={c(
+            '__background',
+            !backdrop && 'disabled',
+            transition && 'transition',
+            active && 'active'
+          )}
+          aria-hidden
         />
-
         <div
+          role='dialog'
           ref={this.modal}
-          className={`${className} modal ${transition ? 'transition' : ''} ${
-            active ? 'active' : ''
-          }`}
+          className={c(
+            transition && 'transition',
+            active && 'active',
+            className
+          )}
           style={modalPosition}
           onClick={(e) => {
             if (type === 'modal' && currModals.length > 1) {
@@ -161,6 +173,7 @@ class Modal extends React.Component {
             }
             e.stopPropagation()
           }}
+          {...props}
         >
           {children}
         </div>
@@ -168,6 +181,21 @@ class Modal extends React.Component {
       document.getElementById('layout')
     )
   }
+}
+
+Modal.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['modal', 'dialog']),
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
+  backdrop: PropTypes.bool,
+  transition: PropTypes.bool,
+  position: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  currModals: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hideModal: PropTypes.func.isRequired,
+  hideOtherModals: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

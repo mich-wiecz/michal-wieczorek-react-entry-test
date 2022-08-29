@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import CaretLeftSvg from '@Images/caret-left.svg'
 import CaretRightSvg from '@Images/caret-right.svg'
 import Image from 'react-optimized-image'
@@ -27,7 +29,7 @@ class Carousel extends React.Component {
 
   render() {
     const {
-      className = '',
+      className,
       gallery,
       alt = '',
       orientation = 'horizontal',
@@ -42,35 +44,45 @@ class Carousel extends React.Component {
           }
         : { height: '100%' }
 
+    const c = (...classes) => classNames('carousel', ...classes)
+
     return (
-      <div className={`carousel ${className}`} style={style} {...props}>
+      <div role='listbox' className={c(className)} style={style} {...props}>
         <img
+          role='option'
+          aria-selected
           src={gallery[this.state.currentImageIndex]}
           alt={alt}
-          className='carousel__image'
+          className={c('__image')}
           style={imgStyles}
         />
         {gallery.length > 1 && (
-          <div className='carousel__actions'>
-            <Image
-              role='button'
-              src={CaretLeftSvg}
-              alt='Get previous image'
-              className='carousel__btn'
+          <div className={c('__actions')}>
+            <button
+              aria-label='previous'
+              className={c('__btn')}
               onClick={() => this.changeImage(this.state.currentImageIndex - 1)}
-            />
-            <Image
-              role='button'
-              src={CaretRightSvg}
-              alt='Get next image'
-              className='carousel__btn'
+            >
+              <Image src={CaretLeftSvg} alt='caret left' />
+            </button>
+            <button
+              aria-label='next'
+              className={c('__btn')}
               onClick={() => this.changeImage(this.state.currentImageIndex + 1)}
-            />
+            >
+              <Image src={CaretRightSvg} alt='caret right' />
+            </button>
           </div>
         )}
       </div>
     )
   }
+}
+
+Carousel.propTypes = {
+  gallery: PropTypes.array.isRequired,
+  alt: PropTypes.string.isRequired,
+  orientation: PropTypes.oneOf(['horizontal', 'vertical']),
 }
 
 export default Carousel

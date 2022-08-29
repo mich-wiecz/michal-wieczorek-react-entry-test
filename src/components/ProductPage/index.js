@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames as c } from '@Utils'
 import { connect } from 'react-redux'
 import { addItemToCart } from '@/app/userSlice'
 import { getDefaultAttributes } from '@Utils'
@@ -72,55 +74,62 @@ class ProductPage extends React.Component {
               inStock,
             } = data.product
             return (
-              <div
-                className={`product ${!inStock ? 'product--unavailable' : ''}`}
-              >
-                <div className='product__veil'>Out of stock</div>
+              <div className={c('product', !inStock && '--unavailable')}>
+                <div
+                  role='alert'
+                  aria-hidden={!inStock}
+                  className={c('product__veil')}
+                >
+                  Out of stock
+                </div>
                 {gallery.length > 1 && (
-                  <section className='product__gallery gallery'>
+                  <section className={c('product', '_|gallery')} aria-hidden>
                     {gallery.map((uri, index) => (
                       <img
                         key={uri}
                         src={uri}
                         alt='product'
-                        className='gallery__image'
+                        className={c('gallery__image')}
                         onClick={() => this.chooseImage(index)}
                       />
                     ))}
                   </section>
                 )}
 
-                <section className='product__presentation presentation'>
-                  <div className='presentation__image-container'>
+                <section className={c('product', '_|presentation')}>
+                  <div className={c('presentation__image-container')}>
                     <img
                       src={gallery[this.state.currentImageIndex]}
                       alt='product'
-                      className='presentation__image'
+                      className={c('presentation__image')}
                     />
                   </div>
-                  <div className='presentation__details details'>
+                  <div className={c('presentation', '_|details')}>
                     <ProductHeader
                       brand={brand}
                       name={name}
-                      className='details__header'
+                      className={c('details__header')}
                     />
                     <ProductAttributes
-                      className='details__attributes'
+                      className={c('details__attributes')}
                       selection={this.state.attributesSelection}
                       onSelected={this.selectAttribute.bind(this)}
                       attributes={attributes}
                     />
-                    <div className='details__price price'>
-                      <h5 className='price__heading'>Price:</h5>
-                      <ProductPrice className='price__value' prices={prices} />
+                    <div className={c('details', '_|price')}>
+                      <h5 className={c('price__heading')}>Price:</h5>
+                      <ProductPrice
+                        className={c('price__value')}
+                        prices={prices}
+                      />
                     </div>
                     <ModalTrigger
                       name='minicart'
                       type='modal'
-                      events={['click']}
+                      events={['click', 'keyDown']}
                     >
                       <button
-                        className='details__action-btn'
+                        className={c('details__action-btn')}
                         onClick={() =>
                           addItemToCart({
                             id: productId,
@@ -132,8 +141,9 @@ class ProductPage extends React.Component {
                         Add to cart
                       </button>
                     </ModalTrigger>
-                    <p
+                    <article
                       className='details__description'
+                      aria-label='product description'
                       dangerouslySetInnerHTML={{
                         __html: description,
                       }}
@@ -149,8 +159,13 @@ class ProductPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  currency: state.user.currency,
-})
+ProductPage.propTypes = {
+  apolloClient: PropTypes.object.isRequired,
+  category: PropTypes.string.isRequired,
+  productId: PropTypes.string.isRequired,
+  addItemToCart: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = () => ({})
 
 export default connect(mapStateToProps, { addItemToCart })(ProductPage)

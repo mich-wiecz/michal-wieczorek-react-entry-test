@@ -1,46 +1,43 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import './TwoColsTable.scss'
 
 class TwoColsTable extends React.Component {
   render() {
-    const { className = '', data } = this.props
+    const { className, data } = this.props
 
-    const { titles, values } = Object.entries(data).reduce(
-      (result, [key, value]) => {
-        result.titles.push(key)
-        result.values.push(value)
+    const { titles, values } = data.reduce(
+      (result, [titleOpts, valueOpts]) => {
+        result.titles.push(titleOpts)
+        result.values.push(valueOpts)
         return result
       },
       { titles: [], values: [] }
     )
 
+    const c = classNames.setParentClass('table')
+
     return (
-      <div role='table' className={`table ${className}`}>
-        <ul className='table__titles'>
-          {titles.map((title, index) => {
-            const highlighted =
-              typeof data[title] === 'object'
-                ? !!data[title].highlightedTitle
-                : false
+      <div role='table' className={c(className)}>
+        <ul className={c('__titles')}>
+          {titles.map(({ title, highlighted = false, ...props }, index) => {
             return (
               <li
                 key={index}
-                className={`table__title ${
-                  highlighted ? 'table__title--highlighted' : ''
-                }`}
+                className={c('__title', highlighted && '--highlighted')}
+                {...props}
               >
                 {title}:
               </li>
             )
           })}
         </ul>
-        <ul className='table__values'>
-          {values.map((value, index) => {
-            const val = typeof value === 'object' ? value.value : value
-
+        <ul className={c('__values')}>
+          {values.map(({ value, ...props }, index) => {
             return (
-              <li key={index} className='table__value'>
-                {val}
+              <li key={index} className={c('__value')} {...props}>
+                {value}
               </li>
             )
           })}
@@ -48,6 +45,20 @@ class TwoColsTable extends React.Component {
       </div>
     )
   }
+}
+
+TwoColsTable.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.shape({
+          title: PropTypes.string,
+          highlighted: PropTypes.bool,
+        }),
+        PropTypes.shape({ value: PropTypes.string }),
+      ])
+    )
+  ),
 }
 
 export default TwoColsTable

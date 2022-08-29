@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import Query from '@Components/Query'
 import { getCategoriesQuery } from '@Queries'
 import { capitalize } from '@Utils'
@@ -7,7 +9,10 @@ import './Nav.scss'
 
 class Nav extends React.Component {
   render() {
-    const { apolloClient, category } = this.props
+    const { className, apolloClient, category } = this.props
+
+    const c = classNames.setParentClass('nav')
+
     return (
       <Query
         apolloClient={apolloClient}
@@ -15,8 +20,8 @@ class Nav extends React.Component {
         errorMessage='Failed to retrieve categories'
       >
         {(data) => (
-          <nav className={`${this.props.className} nav`}>
-            <ul className='nav__links links'>
+          <nav aria-label='Product categories' className={c(className)}>
+            <ul className={c('_|links')}>
               {data.categories.map(({ name }) => {
                 const path = name === 'all' ? '/' : `/${name}`
                 const isCurrent = category === name
@@ -24,9 +29,7 @@ class Nav extends React.Component {
                   <li key={name}>
                     <NavLink
                       to={path}
-                      className={`links__item ${
-                        isCurrent ? 'links__item--active' : ''
-                      }`}
+                      className={c.raw('links__item', isCurrent && '--active')}
                     >
                       {capitalize(name)}
                     </NavLink>
@@ -39,6 +42,11 @@ class Nav extends React.Component {
       </Query>
     )
   }
+}
+
+Nav.propTypes = {
+  apolloClient: PropTypes.object.isRequired,
+  category: PropTypes.string,
 }
 
 export default Nav

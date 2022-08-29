@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames as c } from '@Utils'
 import { connect } from 'react-redux'
 import { changeCurrency } from '@/app/userSlice'
 import { hideModal } from '@/app/modalSlice'
@@ -16,12 +18,23 @@ class CurrenciesDropdown extends React.Component {
   }
 
   render() {
-    const { className = '', apolloClient, currency } = this.props
+    const {
+      className,
+      apolloClient,
+      currency,
+      changeCurrency,
+      hideModal,
+      ...props
+    } = this.props
 
     return (
       <Modal
-        className={`currencies ${className}`}
+        id='currencies-dropdown'
+        className={c('currencies', className)}
+        aria-labelledby='currencies-switch'
+        role='menu'
         name='currencies'
+        type='dialog'
         position={{ top: '63px', right: 0 }}
         backdrop={false}
         transition
@@ -34,20 +47,25 @@ class CurrenciesDropdown extends React.Component {
             errorMessage='Could not fetch available currencies'
           >
             {(data) => (
-              <ul className='currencies__list list'>
-                {data.currencies.map(({ label, symbol }) => (
+              <ul className={c('currencies__list')} {...props}>
+                {data.currencies.map(({ label, symbol }, i) => (
                   <li key={symbol}>
                     <button
-                      className={`list__item item ${
-                        currency === symbol ? 'item--current' : ''
-                      }`}
+                      role='menuitemradio'
+                      aria-checked={currency === symbol}
+                      autoFocus={currency === symbol}
+                      className={c(
+                        'currencies__item',
+                        'currency',
+                        currency === symbol && '--current'
+                      )}
                       onClick={() => this.handleCurrencySelection(symbol)}
                     >
-                      <div className='item__content'>
-                        <span className='item__symbol'>{symbol}</span>
-                        <span className='item__divider'></span>
-                        <span className='item__label'>{label}</span>
-                      </div>
+                      <p className={c('currency__content')}>
+                        <span className={c('currency__symbol')}>{symbol}</span>
+                        <span className={c('currency__divider')}></span>
+                        <span className={c('currency__label')}>{label}</span>
+                      </p>
                     </button>
                   </li>
                 ))}
@@ -58,6 +76,13 @@ class CurrenciesDropdown extends React.Component {
       </Modal>
     )
   }
+}
+
+CurrenciesDropdown.propTypes = {
+  apolloClient: PropTypes.object.isRequired,
+  currency: PropTypes.string.isRequired,
+  changeCurrency: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

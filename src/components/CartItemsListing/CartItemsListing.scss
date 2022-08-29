@@ -9,12 +9,11 @@
         border: .5px solid $gray;
         border-left: none;
         border-right: none;
+
+        &--mini {
+          padding: 20px 0;
+          border: none;
+        }
     }
-
-
-  &--mini &__item {
-    padding: 20px 0;
-    border: none;
-  }
 
 }

@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import { connect } from 'react-redux'
 import { selectItemsTotal, selectTotalPrice } from '../../app/userSlice'
 import Layout from '@Components/Layout'
@@ -12,25 +14,43 @@ class CartPage extends React.Component {
 
     const tax = Number((priceTotal * 0.21).toFixed(2))
 
+    const c = (...classes) => classNames('cart', ...classes)
+
     return (
-      <Layout className='cart' apolloClient={apolloClient}>
-        <h1 className='cart__title'>Cart</h1>
+      <Layout className={c()} apolloClient={apolloClient}>
+        <h1 className={c('__title')}>Cart</h1>
         <CartItemsListing apolloClient={apolloClient} variant='cart' />
         <TwoColsTable
-          className='cart__summary'
-          data={{
-            'Tax 21%': `${currency}${tax.toFixed(2)}`,
-            Quantity: amountTotal,
-            Total: {
-              value: `${currency}${(priceTotal + tax).toFixed(2)}`,
-              highlightedTitle: true,
-            },
-          }}
+          className={c('__summary')}
+          aria-label='order summary'
+          // data={{
+          //   'Tax 21%': `${currency}${tax.toFixed(2)}`,
+          //   Quantity: amountTotal,
+          //   Total: {
+          //     value: `${currency}${priceTotal.toFixed(2)}`,
+          //     highlightedTitle: true,
+          //   },
+          // }}
+          data={[
+            [{ title: 'Tax 21%' }, { value: `${currency}${tax.toFixed(2)}` }],
+            [{ title: 'Quantity' }, { value: amountTotal }],
+            [
+              { title: 'Total', highlighted: true },
+              { value: `${currency}${priceTotal.toFixed(2)}` },
+            ],
+          ]}
         />
-        {amountTotal && <button className='cart__order-btn'>Order</button>}
+        {amountTotal && <button className={c('__order-btn')}>Order</button>}
       </Layout>
     )
   }
+}
+
+CartPage.propTypes = {
+  apolloClient: PropTypes.object.isRequired,
+  currency: PropTypes.string.isRequired,
+  amountTotal: PropTypes.number.isRequired,
+  priceTotal: PropTypes.number.isRequired,
 }
 
 const mapStateToProps = (state) => ({

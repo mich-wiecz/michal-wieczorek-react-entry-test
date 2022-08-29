@@ -1,6 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { classNames } from '@Utils'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
 import {
   increaseCartItemAmount,
   decreaseCartItemAmount,
@@ -83,7 +85,7 @@ class CartItem extends React.Component {
 
   render() {
     const {
-      className = '',
+      className,
       apolloClient,
       variant,
       productId,
@@ -94,11 +96,12 @@ class CartItem extends React.Component {
       increaseCartItemAmount,
       decreaseCartItemAmount,
       updateCartItemAttribute,
-      history,
     } = this.props
 
+    const c = (...classes) => classNames('cart-item', ...classes)
+
     return (
-      <div className={`cart-item cart-item--${variant} ${className}`}>
+      <div className={c(variant && '--' + variant, className)}>
         <Query
           apolloClient={apolloClient}
           query={getProductQuery}
@@ -118,24 +121,28 @@ class CartItem extends React.Component {
             const { category, brand, name, prices, attributes, gallery } =
               product
 
+            const productLink = `/${category}/${productId}`
+
             return (
               <>
-                <div className='cart-item__details'>
-                  <ProductHeader
-                    className='cart-item__header'
-                    variant={variant}
-                    brand={brand}
-                    name={name}
-                    onClick={() => history.push(`/${category}/${productId}`)}
-                  />
+                <div className={c('__details', variant && '--' + variant)}>
+                  <Link to={productLink} aria-labelledby={productLink}>
+                    <ProductHeader
+                      id={productLink}
+                      className={c('__header')}
+                      variant={variant}
+                      brand={brand}
+                      name={name}
+                    />
+                  </Link>
                   <ProductPrice
-                    className='cart-item__price'
+                    className={c('__price')}
                     prices={prices}
                     currency={currency}
                     variant={variant}
                   />
                   <ProductAttributes
-                    className='cart-item__attributes'
+                    className={c('__attributes')}
                     variant={variant}
                     attributes={attributes}
                     selection={selectedAttributes}
@@ -149,14 +156,16 @@ class CartItem extends React.Component {
                   />
                 </div>
                 <AmountChanger
-                  className='cart-item__amount'
+                  className={c('__amount', variant && '--' + variant)}
+                  arial-label='Change the quantity of the product'
                   variant={variant}
                   amount={amount}
                   onIncrease={() => increaseCartItemAmount(productIndex)}
                   onDecrease={() => decreaseCartItemAmount(productIndex)}
                 />
                 <Carousel
-                  className='cart-item__carousel'
+                  className={c('__carousel', variant && '--' + variant)}
+                  aria-label='Product gallery'
                   gallery={variant === 'mini' ? [gallery[0]] : gallery}
                   alt='Product'
                   orientation='horizontal'
@@ -168,6 +177,24 @@ class CartItem extends React.Component {
       </div>
     )
   }
+}
+
+CartItem.propTypes = {
+  variant: PropTypes.string,
+  apolloClient: PropTypes.object.isRequired,
+  productId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  productIndex: PropTypes.number.isRequired,
+  amount: PropTypes.number.isRequired,
+  selectedAttributes: PropTypes.object.isRequired,
+  savedPrices: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currency: PropTypes.string.isRequired,
+  increaseCartItemAmount: PropTypes.func.isRequired,
+  decreaseCartItemAmount: PropTypes.func.isRequired,
+  updateCartItemAttribute: PropTypes.func.isRequired,
+  replaceCartAttributes: PropTypes.func.isRequired,
+  updateCartItemPrices: PropTypes.func.isRequired,
+  removeCartItem: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -182,7 +209,4 @@ const mapDispatchToProps = {
   removeCartItem,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(CartItem))
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem)
