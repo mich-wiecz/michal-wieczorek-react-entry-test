@@ -23,7 +23,7 @@ class ProductCard extends React.Component {
       addItemToCart,
       ...props
     } = this.props
-    const { symbol, label, amount } = getPrice(prices, currency)
+    const { symbol, amount } = getPrice(prices, currency)
 
     const c = classNames.setParentClass('product-card')
 
@@ -64,12 +64,9 @@ class ProductCard extends React.Component {
           {brand}
           {name}
         </h4>
-        <span className={c('__prize')} aria-hidden>
+        <span className={c('__prize')}>
           {symbol}
           {amount.toFixed(2)}
-        </span>
-        <span className='sr-only'>
-          {amount.toFixed(2)} {label}
         </span>
         <div className={c('__veil')} />
       </div>

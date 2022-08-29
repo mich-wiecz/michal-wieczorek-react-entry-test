@@ -31,9 +31,13 @@ class Modal extends React.Component {
   }
 
   handleKeydown(e) {
-    if (e.key !== 'Escape') return
-    const { name, hideModal, type = 'dialog' } = this.props
-    hideModal(type === 'modal' && name)
+    const { currModals, name, hideModal, focusTrap = true } = this.props
+    if (
+      currModals.includes(name) &&
+      (e.key === 'Escape' || (!focusTrap && e.key === 'Tab'))
+    ) {
+      hideModal(name)
+    }
   }
 
   calculateModalPosition() {
@@ -62,20 +66,25 @@ class Modal extends React.Component {
   }
 
   showModal() {
+    const { focusTrap = true } = this.props
+
     this.setState(
       () => ({ isOn: true }),
       () => {
         setTimeout(() => {
           this.setState(() => ({ active: true }))
         }, 1)
-        focusFirstFocusableChild(this.modal.current)
-        applyFocusTrap(this.modal.current)
+        if (focusTrap) {
+          focusFirstFocusableChild(this.modal.current)
+          applyFocusTrap(this.modal.current)
+        }
       }
     )
     this.updateModalPosition()
   }
 
   closeModal() {
+    const { focusTrap = true } = this.props
     this.setState(
       () => ({
         active: false,
@@ -86,8 +95,9 @@ class Modal extends React.Component {
         }, 400)
       }
     )
-
-    removeFocusTrap(this.modal.current)
+    if (focusTrap) {
+      removeFocusTrap(this.modal.current)
+    }
   }
 
   componentDidMount() {
@@ -136,6 +146,7 @@ class Modal extends React.Component {
       hideOtherModals,
       hideModal,
       position,
+      focusTrap,
       ...props
     } = this.props
 
@@ -192,6 +203,7 @@ Modal.propTypes = {
   ]).isRequired,
   backdrop: PropTypes.bool,
   transition: PropTypes.bool,
+  focusTrap: PropTypes.bool,
   position: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   currModals: PropTypes.arrayOf(PropTypes.string).isRequired,
   hideModal: PropTypes.func.isRequired,

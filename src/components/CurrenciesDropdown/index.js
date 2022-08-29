@@ -6,16 +6,64 @@ import { changeCurrency } from '@/app/userSlice'
 import { hideModal } from '@/app/modalSlice'
 import Modal from '@Components/Modal'
 import Query from '@Components/Query'
+import CurrencyItem from './CurrencyItem'
 import { getCurrenciesQuery } from '@Queries'
 
 import './CurrenciesDropdown.scss'
 
 class CurrenciesDropdown extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      lastItemIndex: 0,
+      focusedItemIndex: -1,
+    }
+  }
+
   handleCurrencySelection(symbol) {
     const { changeCurrency, hideModal } = this.props
     changeCurrency(symbol)
     hideModal('currencies')
   }
+
+  handleKeyDown(e) {
+    if (!this.state.lastItemIndex) {
+      return
+    }
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+        e.preventDefault()
+        this.setState((state) => ({
+          focusedItemIndex:
+            state.focusedItemIndex === state.lastItemIndex
+              ? 0
+              : state.focusedItemIndex + 1,
+        }))
+        break
+      case 'ArrowUp':
+      case 'ArrowLeft':
+        e.preventDefault()
+        this.setState((state) => ({
+          focusedItemIndex:
+            state.focusedItemIndex === 0
+              ? state.lastItemIndex
+              : state.focusedItemIndex - 1,
+        }))
+        break
+      default:
+        return
+    }
+  }
+
+  // componentDidMount() {
+  //   document.addEventListener('keydown', this.handleKeyDown.bind(this))
+  // }
+
+  // componentWillUnmount() {
+  //   document.removeEventListener('keydown', this.handleKeyDown.bind(this))
+  // }
 
   render() {
     const {
@@ -38,6 +86,8 @@ class CurrenciesDropdown extends React.Component {
         position={{ top: '63px', right: 0 }}
         backdrop={false}
         transition
+        focusTrap={false}
+        onKeyDown={this.handleKeyDown.bind(this)}
       >
         <>
           <Query
@@ -45,28 +95,30 @@ class CurrenciesDropdown extends React.Component {
             query={getCurrenciesQuery}
             loaderSize={114}
             errorMessage='Could not fetch available currencies'
+            onLoaded={(data) => {
+              const currentIndex = data.currencies.findIndex(
+                ({ symbol }) => symbol === currency
+              )
+              this.setState(() => ({
+                lastItemIndex: data.currencies.length - 1,
+                focusedItemIndex: currentIndex,
+              }))
+            }}
           >
             {(data) => (
               <ul className={c('currencies__list')} {...props}>
                 {data.currencies.map(({ label, symbol }, i) => (
                   <li key={symbol}>
-                    <button
-                      role='menuitemradio'
-                      aria-checked={currency === symbol}
-                      autoFocus={currency === symbol}
-                      className={c(
-                        'currencies__item',
-                        'currency',
-                        currency === symbol && '--current'
-                      )}
-                      onClick={() => this.handleCurrencySelection(symbol)}
-                    >
-                      <p className={c('currency__content')}>
-                        <span className={c('currency__symbol')}>{symbol}</span>
-                        <span className={c('currency__divider')}></span>
-                        <span className={c('currency__label')}>{label}</span>
-                      </p>
-                    </button>
+                    <CurrencyItem
+                      className={c('currencies__item')}
+                      current={currency}
+                      label={label}
+                      symbol={symbol}
+                      focused={this.state.focusedItemIndex === i}
+                      onCurrencyChange={(symbol) =>
+                        this.handleCurrencySelection(symbol)
+                      }
+                    />
                   </li>
                 ))}
               </ul>

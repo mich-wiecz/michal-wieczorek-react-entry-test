@@ -1,12 +1,11 @@
-@use '@Styles/colors' as *;
-@use '@Styles/mixins';
-
+@use "@Styles/colors" as *;
+@use "@Styles/mixins";
 
 .currencies {
     background-color: $light;
     @include mixins.shadow;
     z-index: 51;
-    
+
     &__list {
         margin-bottom: 8.5px;
         width: 100%;
@@ -32,12 +31,20 @@
         line-height: 160%;
         border: none;
         cursor: pointer;
-        transition: background-color, .3s ease-in-out;
+        transition: background-color, 0.3s ease-in-out;
 
-        &:hover, &--current {
+        &:hover,
+        &--current {
             background-color: $gray-light;
         }
 
+        &:focus {
+            outline: 1px solid rgb(16, 16, 16);
+        }
+
+        // &--current:focus {
+        //     outline: none;
+        // }
 
         &__content {
             width: 100%;
@@ -52,8 +59,7 @@
 
         &__divider {
             height: 100%;
-            width: .5rem;
+            width: 0.5rem;
         }
     }
-
 }

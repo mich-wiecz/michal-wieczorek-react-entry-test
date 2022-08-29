@@ -30,6 +30,7 @@ class Minicart extends React.Component {
           top: '80px',
           right: `calc(100vw - ${right + 16}px)`,
         })}
+        focusTrap
       >
         <header id='minicart-header' className={c('__header')}>
           <h2 className={c('__title')}>My bag, </h2>

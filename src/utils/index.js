@@ -1,4 +1,5 @@
 export { classNames } from './class-names'
+export { throttle } from './throttle'
 export {
   getPrice,
   arePricesArraysEqual,

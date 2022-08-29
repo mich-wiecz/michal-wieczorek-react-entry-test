@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap");
 
 * {
   margin: 0;
@@ -7,12 +6,10 @@
   box-sizing: border-box;
 }
 
-
 body {
   min-height: 100vh;
-  font-family: 'Raleway', 'Roboto', 'Source Sans Pro',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Raleway", "Roboto", "Source Sans Pro", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -22,24 +19,16 @@ button {
   border: none;
 }
 
-// :focus {
-//   outline: 1px solid rgb(16, 16, 16);
-// }
-
-
 .sr-only {
-  
-    border: 0 !important;
-    clip: rect(1px, 1px, 1px, 1px) !important; 
-    -webkit-clip-path: inset(50%) !important;
-    clip-path: inset(50%) !important;  
-    height: 1px !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: absolute !important;
-    width: 1px !important;
-    white-space: nowrap !important;          
-  
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
 }
-
