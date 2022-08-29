@@ -23,14 +23,6 @@ class CartPage extends React.Component {
         <TwoColsTable
           className={c('__summary')}
           aria-label='order summary'
-          // data={{
-          //   'Tax 21%': `${currency}${tax.toFixed(2)}`,
-          //   Quantity: amountTotal,
-          //   Total: {
-          //     value: `${currency}${priceTotal.toFixed(2)}`,
-          //     highlightedTitle: true,
-          //   },
-          // }}
           data={[
             [{ title: 'Tax 21%' }, { value: `${currency}${tax.toFixed(2)}` }],
             [{ title: 'Quantity' }, { value: amountTotal }],
@@ -40,7 +32,7 @@ class CartPage extends React.Component {
             ],
           ]}
         />
-        {amountTotal && <button className={c('__order-btn')}>Order</button>}
+        {amountTotal > 0 && <button className={c('__order-btn')}>Order</button>}
       </Layout>
     )
   }

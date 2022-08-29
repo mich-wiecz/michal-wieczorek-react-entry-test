@@ -45,7 +45,6 @@ export function removeFocusTrap(container) {
 
 function changeTabIndexOfChildren(parentSelector, tabIndex) {
   const elem = document.querySelector(parentSelector)
-  console.log(elem, parentSelector)
   Array.from(elem.querySelectorAll(focusableElementsSelector)).forEach(
     (child) => child.setAttribute('tabindex', tabIndex)
   )

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { classNames } from '@Utils'
 import { connect } from 'react-redux'
 import CartItem from '@Components/CartItem'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import './CartItemsListing.scss'
 
 class CartItemsListing extends React.Component {
@@ -12,22 +13,24 @@ class CartItemsListing extends React.Component {
     const c = (...classes) => classNames('cart-listing', ...classes)
 
     return (
-      <ul className={c(className)}>
+      <TransitionGroup component='ul' className={c(className)}>
         {items.map(({ id, amount, attributes, prices }, index) => (
-          <li key={index}>
-            <CartItem
-              className={c('__item', variant && '--' + variant)}
-              apolloClient={apolloClient}
-              variant={variant}
-              productId={id}
-              productIndex={index}
-              amount={amount}
-              savedPrices={prices}
-              selectedAttributes={attributes}
-            />
-          </li>
+          <CSSTransition key={index} timeout={700} classNames={c('__item')}>
+            <li>
+              <CartItem
+                className={c('__item', variant && '--' + variant)}
+                apolloClient={apolloClient}
+                variant={variant}
+                productId={id}
+                productIndex={index}
+                amount={amount}
+                savedPrices={prices}
+                selectedAttributes={attributes}
+              />
+            </li>
+          </CSSTransition>
         ))}
-      </ul>
+      </TransitionGroup>
     )
   }
 }

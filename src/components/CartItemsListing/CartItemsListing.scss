@@ -1,19 +1,23 @@
 @use "@Styles/colors" as *;
 
 .cart-listing {
-    list-style: none;
+  list-style: none;
 
-    &__item {
-        padding: 24px 0;
-        width: 100%;
-        border: .5px solid $gray;
-        border-left: none;
-        border-right: none;
+  &__item {
+    padding: 24px 0;
+    width: 100%;
+    border: 0.5px solid $gray;
+    border-left: none;
+    border-right: none;
 
-        &--mini {
-          padding: 20px 0;
-          border: none;
-        }
+    &-exit-active {
+      opacity: 0;
+      transition: opacity 0.7s ease-out;
     }
 
+    &--mini {
+      padding: 20px 0;
+      border: none;
+    }
+  }
 }
