@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { classNames } from '@Utils'
 import { connect } from 'react-redux'
 import { selectItemsTotal, selectTotalPrice } from '@/app/userSlice.js'
+import { hideModal } from '@/app/modalSlice.js'
 import { Link } from 'react-router-dom'
 import Modal from '@Components/Modal'
 import CartItemsListing from '@Components/CartItemsListing'
@@ -11,8 +12,14 @@ import './Minicart.scss'
 
 class Minicart extends React.Component {
   render() {
-    const { apolloClient, container, totalAmount, totalPrice, currency } =
-      this.props
+    const {
+      apolloClient,
+      container,
+      totalAmount,
+      totalPrice,
+      currency,
+      hideModal,
+    } = this.props
 
     const c = classNames.setParentClass('minicart')
 
@@ -59,6 +66,7 @@ class Minicart extends React.Component {
             to='/cart'
             aria-label='Cart page'
             className={c('__btn', '--light')}
+            onClick={() => hideModal()}
           >
             View bag
           </Link>
@@ -75,6 +83,7 @@ Minicart.propTypes = {
   totalAmount: PropTypes.number.isRequired,
   totalPrice: PropTypes.number.isRequired,
   currency: PropTypes.string.isRequired,
+  hideModal: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -83,4 +92,4 @@ const mapStateToProps = (state) => ({
   totalPrice: selectTotalPrice(state),
 })
 
-export default connect(mapStateToProps, {})(Minicart)
+export default connect(mapStateToProps, { hideModal })(Minicart)
