@@ -57,14 +57,6 @@ class CurrenciesDropdown extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   document.addEventListener('keydown', this.handleKeyDown.bind(this))
-  // }
-
-  // componentWillUnmount() {
-  //   document.removeEventListener('keydown', this.handleKeyDown.bind(this))
-  // }
-
   render() {
     const {
       className,

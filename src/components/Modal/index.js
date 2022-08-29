@@ -8,6 +8,7 @@ import {
   applyFocusTrap,
   removeFocusTrap,
   focusFirstFocusableChild,
+  throttle,
 } from '@Utils'
 import './Modal.scss'
 
@@ -20,6 +21,11 @@ class Modal extends React.Component {
       active: false,
       modalPosition: null,
     }
+
+    this.updateModalPositionThrottled = throttle(
+      this.updateModalPosition.bind(this),
+      100
+    )
 
     this.modal = React.createRef()
   }
@@ -112,7 +118,7 @@ class Modal extends React.Component {
 
     window.addEventListener('click', this.handleClickOutside.bind(this))
     window.addEventListener('keydown', this.handleKeydown.bind(this))
-    window.addEventListener('resize', this.updateModalPosition.bind(this))
+    window.addEventListener('resize', this.updateModalPositionThrottled)
   }
 
   componentDidUpdate(prev) {
@@ -131,7 +137,7 @@ class Modal extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('click', this.handleClickOutside.bind(this))
     window.removeEventListener('keydown', this.handleKeydown.bind(this))
-    window.removeEventListener('resize', this.updateModalPosition.bind(this))
+    window.removeEventListener('resize', this.updateModalPositionThrottled)
   }
 
   render() {
