@@ -110,8 +110,12 @@
     }
 
     &--unavailable {
-        pointer-events: none;
         opacity: 45%;
+        cursor: auto;
+    }
+
+    &--unavailable .add-btn {
+        display: none;
     }
 
     &--unavailable .product-card__unavailable-info {

@@ -28,15 +28,14 @@ class CategoryPage extends React.Component {
             {(data) =>
               data.category.products.map((productData) => {
                 const goToProduct = () =>
-                  productData.inStock
-                    ? history.push(`/${productData.category}/${productData.id}`)
-                    : {}
+                  history.push(`/${productData.category}/${productData.id}`)
+
                 return (
                   <ProductCard
                     key={productData.id}
                     role='link'
+                    tabIndex={0}
                     aria-label='Product details'
-                    tabIndex={productData.inStock ? 0 : -1}
                     {...productData}
                     onClick={goToProduct}
                     onKeyDown={(e) => {
