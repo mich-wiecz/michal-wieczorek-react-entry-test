@@ -29,8 +29,15 @@ class ProductCard extends React.Component {
 
     return (
       <div className={c(!inStock && '--unavailable', className)} {...props}>
-        <div className={c('__image-container')}>
-          <img src={gallery[0]} alt='product' className={c('__image')} />
+        <div className={c('__header')}>
+          <div
+            role='img'
+            aria-label='Product'
+            className={c('__image')}
+            style={{
+              backgroundImage: `url(${gallery[0]})`,
+            }}
+          ></div>
           <ModalTrigger
             name='minicart'
             type='modal'
@@ -53,10 +60,10 @@ class ProductCard extends React.Component {
           </ModalTrigger>
           <div
             role='alert'
-            aria-hidden={!inStock}
+            aria-hidden={inStock}
             className={c('__unavailable-info')}
           >
-            Out of stock
+            <span>Out of stock</span>
           </div>
         </div>
 
