@@ -4,11 +4,10 @@
 .minicart {
     position: fixed;
     padding: 32px 16px;
-    width: 339px;
+    width: 355px;
     max-height: 80vh;
     overflow-x: hidden;
     overflow-y: auto;
-    @include mixins.customScrollbar($track-color: $dark);
     background-color: $light;
 
     &__header {
@@ -18,14 +17,13 @@
     }
 
     &__title {
-       display: inline;
+        display: inline;
         font-weight: 700;
     }
 
     &__total-amount {
         font-weight: 500;
     }
-
 
     &__products {
         margin-bottom: 12px;
@@ -40,7 +38,7 @@
     }
 
     &__total-label {
-        font-family: 'Roboto';
+        font-family: "Roboto";
         font-weight: 500;
         font-size: 16px;
         line-height: 18px;
@@ -61,8 +59,11 @@
 
     &__btn {
         @include mixins.actionButton;
+        width: calc(50% - 6px);
+        height: 43px;
         font-size: 14px !important;
         text-decoration: none;
+        border: 1px solid transparent;
         &--light {
             margin-right: 10px;
             background-color: $light !important;

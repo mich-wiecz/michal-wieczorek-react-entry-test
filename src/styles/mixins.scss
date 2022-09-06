@@ -35,35 +35,3 @@
         cursor: not-allowed;
     }
 }
-
-@mixin customScrollbar($track-color: #ccc, $thumb-color: $primary) {
-    $thumb-inactive: color.adjust($thumb-color, $alpha: -0.3);
-
-    & {
-        scrollbar-color: $track-color $thumb-inactive;
-        transition: scrollbar-color 0.3s ease-out;
-
-        &:hover {
-            scrollbar-color: $track-color $thumb-color;
-        }
-    }
-
-    &::-webkit-scrollbar {
-        width: 20px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background-color: $track-color;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: $thumb-inactive;
-        border: 5px solid transparent;
-        border-radius: 50px;
-        background-clip: content-box;
-
-        &:hover {
-            background-color: $thumb-color;
-        }
-    }
-}

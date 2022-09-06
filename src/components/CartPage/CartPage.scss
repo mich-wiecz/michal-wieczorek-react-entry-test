@@ -1,4 +1,4 @@
-@use '@Styles/mixins';
+@use "@Styles/mixins";
 
 .cart {
     &__title {
@@ -18,9 +18,9 @@
         @include mixins.actionButton;
         margin: 16px 0;
         width: 279px;
+        height: 43px;
         font-size: 14px;
         line-height: 120%;
         text-transform: uppercase;
     }
-
 }

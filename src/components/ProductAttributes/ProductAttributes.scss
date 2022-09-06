@@ -14,6 +14,11 @@
         }
     }
 
+    fieldset:nth-last-child(1).attrs__section--cart,
+    fieldset:nth-last-child(1).attrs__section--mini {
+        margin-bottom: 0;
+    }
+
     &__section {
         border: none;
         margin-bottom: 24px;
@@ -78,8 +83,7 @@
             &--text.attribute__label--mini {
                 margin-right: 8px;
                 padding: 6px;
-                min-width: 24px;
-                width: auto !important;
+                min-width: 24px !important;
                 min-height: auto;
                 height: 24px !important;
                 display: flex;
