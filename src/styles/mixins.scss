@@ -1,5 +1,5 @@
-@use './colors.scss' as *;
-@use 'sass:color';
+@use "./colors.scss" as *;
+@use "sass:color";
 
 @mixin shadow {
     box-shadow: 0 4px 35px $shadow;
@@ -13,7 +13,6 @@
     font-weight: bold;
 }
 
-
 @mixin actionButton {
     padding: 16px 32px;
     display: flex;
@@ -21,27 +20,32 @@
     justify-content: center;
     background-color: $primary;
     color: $light;
-    border:none;
+    border: none;
     cursor: pointer;
-    font-family: 'Raleway';
+    font-family: "Raleway";
     font-weight: 600;
     font-size: 16px;
     line-height: 120%;
     text-transform: uppercase;
     letter-spacing: 0px;
+
+    &:disabled {
+        background-color: color.adjust($primary, $blackness: 30%);
+        opacity: 80%;
+        cursor: not-allowed;
+    }
 }
 
 @mixin customScrollbar($track-color: #ccc, $thumb-color: $primary) {
-
     $thumb-inactive: color.adjust($thumb-color, $alpha: -0.3);
 
     & {
         scrollbar-color: $track-color $thumb-inactive;
-        transition: scrollbar-color .3s ease-out;
+        transition: scrollbar-color 0.3s ease-out;
 
         &:hover {
             scrollbar-color: $track-color $thumb-color;
-        }        
+        }
     }
 
     &::-webkit-scrollbar {
@@ -63,5 +67,3 @@
         }
     }
 }
-
-

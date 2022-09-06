@@ -26,11 +26,13 @@ class ProductPage extends React.Component {
   initializeAttributesState(data) {
     const { attributes } = data.product
 
-    const defaultAttrs = getDefaultAttributes(attributes)
-    if (!defaultAttrs) return
+    const initialAttrs = attributes.reduce(
+      (result, { id }) => ({ ...result, [id]: null }),
+      {}
+    )
 
     this.setState(() => ({
-      attributesSelection: defaultAttrs,
+      attributesSelection: initialAttrs,
     }))
   }
 
@@ -49,8 +51,14 @@ class ProductPage extends React.Component {
     }))
   }
 
+  areAllAttributesSelected() {
+    return Object.values(this.state.attributesSelection).every((val) => !!val)
+  }
+
   render() {
     const { category, apolloClient, productId, addItemToCart } = this.props
+
+    const areAllAttributesSelected = this.areAllAttributesSelected()
 
     return (
       <Layout apolloClient={apolloClient} category={category}>
@@ -138,6 +146,7 @@ class ProductPage extends React.Component {
                     >
                       <button
                         className={c('details__action-btn')}
+                        disabled={!areAllAttributesSelected}
                         onClick={() =>
                           addItemToCart({
                             id: productId,
@@ -157,6 +166,13 @@ class ProductPage extends React.Component {
                       }}
                     />
                   </div>
+                  {!areAllAttributesSelected && (
+                    <p className='sr-only'>
+                      (You have to select{' '}
+                      {attributes.map(({ name }) => name).join(', ')} in order
+                      to add this product to cart)
+                    </p>
+                  )}
                 </section>
               </div>
             )

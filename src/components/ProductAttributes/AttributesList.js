@@ -34,6 +34,7 @@ class AttributesList extends React.Component {
                 type='radio'
                 checked={isSelected}
                 onChange={() => onSelected(value)}
+                onFocus={() => onSelected(value)}
               />
               <label
                 htmlFor={radioId}
