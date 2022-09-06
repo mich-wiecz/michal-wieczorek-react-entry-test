@@ -3,13 +3,11 @@ import PropTypes from 'prop-types'
 import { classNames as c, applyInertia } from '@Utils'
 import { connect } from 'react-redux'
 import { addItemToCart } from '@/app/userSlice'
-import { getDefaultAttributes } from '@Utils'
 import Layout from '@Components/Layout'
 import Query from '@Components/Query'
 import ProductHeader from '@Components/ProductHeader'
 import ProductAttributes from '@Components/ProductAttributes'
 import ProductPrice from '@Components/ProductPrice'
-import ModalTrigger from '@Components/Modal/ModalTrigger'
 import { getProductQuery } from '@Queries'
 import './ProductPage.scss'
 
@@ -139,25 +137,19 @@ class ProductPage extends React.Component {
                         prices={prices}
                       />
                     </div>
-                    <ModalTrigger
-                      name='minicart'
-                      type='modal'
-                      events={['click', 'keyDown']}
+                    <button
+                      className={c('details__action-btn')}
+                      disabled={!areAllAttributesSelected}
+                      onClick={() =>
+                        addItemToCart({
+                          id: productId,
+                          attributes: this.state.attributesSelection,
+                          prices,
+                        })
+                      }
                     >
-                      <button
-                        className={c('details__action-btn')}
-                        disabled={!areAllAttributesSelected}
-                        onClick={() =>
-                          addItemToCart({
-                            id: productId,
-                            attributes: this.state.attributesSelection,
-                            prices,
-                          })
-                        }
-                      >
-                        Add to cart
-                      </button>
-                    </ModalTrigger>
+                      Add to cart
+                    </button>
                     <article
                       className='details__description'
                       aria-label='product description'

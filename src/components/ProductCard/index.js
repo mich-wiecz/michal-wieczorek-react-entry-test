@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { addItemToCart } from '@/app/userSlice'
 import { getPrice, getDefaultAttributes } from '@Utils'
 import { ReactComponent as BasketSvg } from '@Images/basket-white.svg'
-import ModalTrigger from '@Components/Modal/ModalTrigger'
 import './ProductCard.scss'
 
 class ProductCard extends React.Component {
@@ -38,26 +37,21 @@ class ProductCard extends React.Component {
               backgroundImage: `url(${gallery[0]})`,
             }}
           ></div>
-          <ModalTrigger
-            name='minicart'
-            type='modal'
-            events={['click', 'keyDown']}
+          <button
+            className={c('_|add-btn')}
+            tabIndex={inStock ? 0 : -1}
+            onClick={(e) => {
+              e.stopPropagation()
+              addItemToCart({
+                id,
+                prices,
+                attributes: getDefaultAttributes(attributes) || {},
+              })
+            }}
+            aria-label='Add product with default options to the cart'
           >
-            <button
-              className={c('_|add-btn')}
-              tabIndex={inStock ? 0 : -1}
-              onClick={() =>
-                addItemToCart({
-                  id,
-                  prices,
-                  attributes: getDefaultAttributes(attributes) || {},
-                })
-              }
-              aria-label='Add product with default options to the cart'
-            >
-              <BasketSvg className={c.raw('add-btn__icon')} aria-hidden />
-            </button>
-          </ModalTrigger>
+            <BasketSvg className={c.raw('add-btn__icon')} aria-hidden />
+          </button>
           <div
             role='alert'
             aria-hidden={inStock}
