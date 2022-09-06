@@ -96,19 +96,18 @@ class ProductPage extends React.Component {
                 >
                   Out of stock
                 </div>
-                {gallery.length > 1 && (
-                  <section className={c('product', '_|gallery')} aria-hidden>
-                    {gallery.map((uri, index) => (
-                      <img
-                        key={uri}
-                        src={uri}
-                        alt='product'
-                        className={c('gallery__image')}
-                        onClick={() => this.chooseImage(index)}
-                      />
-                    ))}
-                  </section>
-                )}
+
+                <section className={c('product', '_|gallery')} aria-hidden>
+                  {gallery.map((uri, index) => (
+                    <img
+                      key={uri}
+                      src={uri}
+                      alt='product'
+                      className={c('gallery__image')}
+                      onClick={() => this.chooseImage(index)}
+                    />
+                  ))}
+                </section>
 
                 <section className={c('product', '_|presentation')}>
                   <div className={c('presentation__image-container')}>
