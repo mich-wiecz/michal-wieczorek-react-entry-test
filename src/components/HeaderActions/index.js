@@ -37,10 +37,11 @@ class HeaderActions extends React.Component {
               />
             </button>
           </ModalTrigger>
-          <Link
-            to='/cart'
+          <ModalTrigger
+            name='minicart'
+            type='modal'
+            events={['click', 'keyDown']}
             className={c('__btn', 'cart-toggler')}
-            aria-label='cart'
           >
             <Image
               src={BasketSvg}
@@ -51,7 +52,7 @@ class HeaderActions extends React.Component {
               className={c.raw('cart-toggler__total')}
               aria-label='total amount of products in the cart'
             />
-          </Link>
+          </ModalTrigger>
         </div>
         <CurrenciesDropdown
           apolloClient={apolloClient}

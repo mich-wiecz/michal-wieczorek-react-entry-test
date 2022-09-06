@@ -22,8 +22,12 @@ class ModalTrigger extends React.Component {
   }
 
   render() {
-    const { children } = this.props
-    return <div {...this.getEventsListeners()}>{children}</div>
+    const { className = '', children } = this.props
+    return (
+      <div className={className} {...this.getEventsListeners()}>
+        {children}
+      </div>
+    )
   }
 }
 
