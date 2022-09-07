@@ -69,7 +69,6 @@ class ProductCard extends React.Component {
           {symbol}
           {amount.toFixed(2)}
         </span>
-        <div className={c('__veil')} />
       </div>
     )
   }

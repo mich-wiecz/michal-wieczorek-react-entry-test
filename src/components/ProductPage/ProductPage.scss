@@ -1,5 +1,6 @@
 @use "@Styles/mixins";
 @use "@Styles/colors" as *;
+@use "sass:color";
 
 .product-loader {
     position: absolute;
@@ -15,21 +16,25 @@
         display: none;
         position: absolute;
         inset: -10%;
-        background-color: $dark;
-        opacity: 50%;
-        cursor: not-allowed;
-        align-items: center;
-        justify-content: center;
+        z-index: 1;
+
+        padding-top: calc(50vh - 35%);
+        text-align: center;
+
+        background-color: transparent;
+        color: $muted;
         text-transform: uppercase;
         font-size: 100px;
         line-height: 160%;
-        z-index: 1;
+        cursor: not-allowed;
     }
 
     &--unavailable {
-        .product__veil {
-            display: flex;
-        }
+        opacity: 45%;
+    }
+
+    &--unavailable &__veil {
+        display: block;
     }
 
     &__gallery {

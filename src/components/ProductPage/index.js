@@ -137,19 +137,22 @@ class ProductPage extends React.Component {
                         prices={prices}
                       />
                     </div>
-                    <button
-                      className={c('details__action-btn')}
-                      disabled={!areAllAttributesSelected}
-                      onClick={() =>
-                        addItemToCart({
-                          id: productId,
-                          attributes: this.state.attributesSelection,
-                          prices,
-                        })
-                      }
-                    >
-                      Add to cart
-                    </button>
+                    {inStock && (
+                      <button
+                        className={c('details__action-btn')}
+                        disabled={!areAllAttributesSelected}
+                        onClick={() =>
+                          addItemToCart({
+                            id: productId,
+                            attributes: this.state.attributesSelection,
+                            prices,
+                          })
+                        }
+                      >
+                        Add to cart
+                      </button>
+                    )}
+
                     <article
                       className='details__description'
                       aria-label='product description'
