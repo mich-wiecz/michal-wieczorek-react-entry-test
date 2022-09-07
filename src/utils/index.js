@@ -13,6 +13,7 @@ export {
   removeInertia,
   focusFirstFocusableChild,
 } from './focus'
+export { renderHTML } from './render-html'
 
 export function capitalize(value) {
   return value[0].toUpperCase() + value.slice(1)

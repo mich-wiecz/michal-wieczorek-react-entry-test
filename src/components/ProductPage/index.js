@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { classNames as c, applyInertia } from '@Utils'
+import { classNames as c, applyInertia, renderHTML } from '@Utils'
 import { connect } from 'react-redux'
 import { addItemToCart } from '@/app/userSlice'
 import Layout from '@Components/Layout'
@@ -84,6 +84,7 @@ class ProductPage extends React.Component {
               attributes,
               inStock,
             } = data.product
+
             return (
               <div
                 id={productId}
@@ -152,10 +153,9 @@ class ProductPage extends React.Component {
                     <article
                       className='details__description'
                       aria-label='product description'
-                      dangerouslySetInnerHTML={{
-                        __html: description,
-                      }}
-                    />
+                    >
+                      {renderHTML(description)}
+                    </article>
                   </div>
                   {!areAllAttributesSelected && (
                     <p className='sr-only'>
